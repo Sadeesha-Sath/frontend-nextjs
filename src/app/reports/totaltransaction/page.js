@@ -8,7 +8,7 @@ import "./style.css"
       try {
         const response = await fetch("http://localhost:8080/branches");
         const json = await response.json();
-        const branches = json.map(item => ({
+        const branches = json[0].map(item => ({
           value: item.BranchID,
           label: item.BranchName
         }));
@@ -19,15 +19,27 @@ import "./style.css"
       }
     };
 
-  const view_fetch = async ()=>{
+  const view_fetch = async (branch)=>{
     try {
-      const response = await fetch("http://localhost:8080/view");
+      const response = await fetch("http://localhost:8080/view", {
+        method: 'POST',
+        body: JSON.stringify({brId: branch}),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+        
+      });
       const json = await response.json();
-      console.log(json);
-      const view = json.map((item, index) => ({
-        accnum: item.AccountNo,
-        count: item.Count, 
-        key: (index+1).toString()
+      const view = json[0][0].map((item, index) => ({
+        key: (index+1).toString(),
+        trId: item.TransactionID,
+        debAcc: item.DebitedAcc, 
+        creAcc: item.CreditedAcc, 
+        trnType: item.TrnType, 
+        amount: item.Amount,
+        debBr: item.DebitedBr,
+        creBr: item.CreditedBr
+
       }));
       return view;
 
@@ -63,22 +75,46 @@ const Report = () => {
   
 const columns = [
   {
-    title: "Account Number",
-    dataIndex: "accnum",
-    key: "accnum",
+    title: "Transaction ID",
+    dataIndex: "trId",
+    key: "trId",
   },
   {
-    title: "Count",
-    dataIndex: "count",
-    key: "count",
+    title: "Debited Account",
+    dataIndex: "debAcc",
+    key: "debAcc",
   },
+  {
+    title: "Credited Account",
+    dataIndex: "creAcc",
+    key: "creAcc",
+  },
+  {
+    title: "Transaction Type",
+    dataIndex: "trnType",
+    key: "trnType",
+  },
+  {
+    title: "Amount",
+    dataIndex: "amount",
+    key: "amount",
+  },
+  {
+    title: "Debited Branch",
+    dataIndex: "debBr",
+    key: "debBr",
+  },
+  {
+    title: "Credited Branch",
+    dataIndex: "creBr",
+    key: "creBr",
+  }
 ];
 
 
   const handleClick= async() => {
-    if(reportType == 'transaction' && branch =='B001'){
-        console.log("Reached");
-        const data =await view_fetch();
+    if(reportType == 'transaction'){
+        const data =await view_fetch(branch);
         setView(data);
         setShowtrTable(true);
     }

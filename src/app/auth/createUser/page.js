@@ -27,9 +27,6 @@ const LoginForm = () => {
     
   };
 
-  const postDetails = async () =>{
-  
-  }
   return (
     <>
       <center>
