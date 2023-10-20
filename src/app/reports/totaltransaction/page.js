@@ -6,7 +6,7 @@ import "./style.css"
 
   const branch_fetch = async () => {
       try {
-        const response = await fetch("http://localhost:8080/branches");
+        const response = await fetch("http://localhost:8080/report/branches");
         const json = await response.json();
         const branches = json[0].map(item => ({
           value: item.BranchID,
@@ -21,7 +21,7 @@ import "./style.css"
 
   const view_fetch = async (branch)=>{
     try {
-      const response = await fetch("http://localhost:8080/view", {
+      const response = await fetch("http://localhost:8080/report/view", {
         method: 'POST',
         body: JSON.stringify({brId: branch}),
         headers: {
