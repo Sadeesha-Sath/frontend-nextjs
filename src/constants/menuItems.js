@@ -1,6 +1,7 @@
 import { HomeOutlined, BankOutlined } from "@ant-design/icons";
-import { BsArrowLeftRight } from "react-icons/bs";
+import { BsArrowLeftRight, BsFilePerson, BsPeople } from "react-icons/bs";
 import { GiPiggyBank } from "react-icons/gi";
+import { GoPerson } from "react-icons/go";
 import { CiWallet } from "react-icons/ci";
 import { FaMoneyBillTransfer } from "react-icons/fa";
 
@@ -30,6 +31,9 @@ const menuItemsEmployee = [
   getItem("All Accounts", "accounts", <CiWallet />, null),
   getItem("Transfer Funds", "transfer-funds", <FaMoneyBillTransfer />, null),
   getItem("All Fixed Deposits", "fixed-deposits", <GiPiggyBank />, null),
+  getItem("Users", "users", <GoPerson />),
+  getItem("Customers", "customers", <BsPeople />),
+  getItem("Employees", "employees", <BsFilePerson />),
   getItem("Loan Management", "loan", <BankOutlined />, [
     getItem("All Active Loans", "active-loans", null, null),
     getItem("Request Offline Loan", "request-offline-loan", null, null),
@@ -44,6 +48,9 @@ const menuItemsBManager = [
   getItem("Transfer Funds", "transfer-funds", <FaMoneyBillTransfer />, null),
   getItem("All Transactions", "transactions", <BsArrowLeftRight />, null),
   getItem("All Fixed Deposits", "fixed-deposits", <GiPiggyBank />, null),
+  getItem("Users", "users", <GoPerson />),
+  getItem("Customers", "customers", <BsPeople />),
+  getItem("Employees", "employees", <BsFilePerson />),
   getItem("Loan Management", "loan", <BankOutlined />, [
     getItem("All Active Loans", "active-loans", null, null),
     getItem("Request Offline Loan", "request-offline-loan", null, null),
@@ -59,6 +66,10 @@ const menuItemsAdmin = [
   getItem("Transfer Funds", "transfer-funds", <FaMoneyBillTransfer />, null),
   getItem("All Transactions", "transactions", <BsArrowLeftRight />, null),
   getItem("All Fixed Deposits", "fixed-deposits", <GiPiggyBank />, null),
+  getItem("Branch Management", "branch", <BankOutlined />),
+  getItem("Users", "users", <GoPerson />),
+  getItem("Customers", "customers", <BsPeople />),
+  getItem("Employees", "employees", <BsFilePerson />),
   getItem("Loan Management", "loan", <BankOutlined />, [
     getItem("All Active Loans", "active-loans", null, null),
     getItem("Request Offline Loan", "request-offline-loan", null, null),
@@ -68,4 +79,9 @@ const menuItemsAdmin = [
   ]),
 ];
 
-export { menuItemsCustomer, menuItemsEmployee, menuItemsBManager, menuItemsAdmin };
+export {
+  menuItemsCustomer,
+  menuItemsEmployee,
+  menuItemsBManager,
+  menuItemsAdmin,
+};
