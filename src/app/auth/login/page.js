@@ -4,12 +4,33 @@ import React from "react";
 import "./login.css";
 import { Form, Input, Button, Checkbox, Typography } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { validEmail } from "@/constants/regex";
+import { loginByEmail, loginByUsername } from "@/api/dataProvider";
+import { redirect } from "next/navigation";
+import { useUserStore } from "@/store/store";
 
 const { Title, Link } = Typography;
 
 const LoginForm = () => {
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     console.log("Received values of form: ", values);
+    if (validEmail.test(values.username_email)) {
+      console.log("Email");
+      const res = loginByEmail(values.username_email, values.password, values.remember);
+      if (res.status === "success") {
+        redirect("/home/dashboard");
+      } else {
+        console.log(res);
+      }
+    } else {
+      console.log("Username");
+      const res = loginByUsername(values.username_email, values.password, values.remember);
+      if (res.status === "success") {
+        redirect("/home/dashboard");
+      } else {
+        console.log(res);
+      }
+    }
   };
   return (
     <>
@@ -28,7 +49,7 @@ const LoginForm = () => {
         onFinish={onFinish}
       >
         <Form.Item
-          name="username/email"
+          name="username_email"
           rules={[
             {
               required: true,
