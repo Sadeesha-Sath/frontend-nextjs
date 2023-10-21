@@ -1,0 +1,46 @@
+/* Sidebar.css */
+.app {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(200, 233, 233);
+  }
+  
+  .sidebar {
+    background-color: #333;
+    color: white;
+    padding: 2%;
+    width: 200px;
+    height: 100%;
+  }
+  
+  .sidebar h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  li {
+    padding: 10px 0;
+  }
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: background-color 0.2s, color 0.2s;
+  }
+  
+  a:hover {
+    background-color: rgb(30, 30, 164); /* Change the background color on hover to blue */
+    color: white;
+  }
+  
+  li.active a {
+    background-color: rgb(30, 30, 164); /* Change the background color for active links to blue */
+    color: white;
+  }
+  
