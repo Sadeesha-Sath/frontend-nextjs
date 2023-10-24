@@ -13,7 +13,7 @@ import { Button, Cascader, Checkbox, DatePicker, Form, Input, InputNumber,
 //   }
 //   return e?.fileList;
 // };
-const FormDisabledDemo = () => {
+const NewLoanApplication = () => {
   const [componentDisabled, setComponentDisabled] = useState(false);
   return (
     <>
@@ -63,4 +63,4 @@ const FormDisabledDemo = () => {
     </>
   );
 };
-export default () => <FormDisabledDemo />;
+export default NewLoanApplication;
