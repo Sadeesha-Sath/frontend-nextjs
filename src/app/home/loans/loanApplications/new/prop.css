@@ -1,17 +1,17 @@
-.signup-form {
+.login-form {
     max-width: 100%;
     width: 20vw;
     min-width: 100px;
 }
 
-.signup-form-left-align {
+.login-form-left-align {
     float: left;
 }
 
-.signup-form-right-align {
+.login-form-right-align {
     float: right;
 }
 
-.signup-form-button {
+.login-form-button {
     width: 100%;
 }
