@@ -3,7 +3,7 @@ import { BsArrowLeftRight, BsFilePerson, BsPeople } from "react-icons/bs";
 import { GiPiggyBank } from "react-icons/gi";
 import { GoPerson } from "react-icons/go";
 import { CiWallet } from "react-icons/ci";
-import { FaMoneyBillTransfer } from "react-icons/fa";
+import { FcMoneyTransfer } from "react-icons/fc";
 
 const getItem = (label, key, icon, children, type) => ({
   key,
@@ -29,7 +29,7 @@ const menuItemsCustomer = [
 const menuItemsEmployee = [
   getItem("Dashboard", "dashboard", <HomeOutlined />, null),
   getItem("All Accounts", "accounts", <CiWallet />, null),
-  getItem("Transfer Funds", "transfer-funds", <FaMoneyBillTransfer />, null),
+  getItem("Transfer Funds", "transfer-funds", <FcMoneyTransfer />, null),
   getItem("All Fixed Deposits", "fixed-deposits", <GiPiggyBank />, null),
   getItem("Users", "users", <GoPerson />),
   getItem("Customers", "customers", <BsPeople />),
@@ -45,7 +45,7 @@ const menuItemsEmployee = [
 const menuItemsBManager = [
   getItem("Dashboard", "dashboard", <HomeOutlined />, null),
   getItem("All Accounts", "accounts", <CiWallet />, null),
-  getItem("Transfer Funds", "transfer-funds", <FaMoneyBillTransfer />, null),
+  getItem("Transfer Funds", "transfer-funds", <FcMoneyTransfer />, null),
   getItem("All Transactions", "transactions", <BsArrowLeftRight />, null),
   getItem("All Fixed Deposits", "fixed-deposits", <GiPiggyBank />, null),
   getItem("Users", "users", <GoPerson />),
@@ -63,7 +63,7 @@ const menuItemsBManager = [
 const menuItemsAdmin = [
   getItem("Dashboard", "dashboard", <HomeOutlined />, null),
   getItem("All Accounts", "accounts", <CiWallet />, null),
-  getItem("Transfer Funds", "transfer-funds", <FaMoneyBillTransfer />, null),
+  getItem("Transfer Funds", "transfer-funds", <FcMoneyTransfer />, null),
   getItem("All Transactions", "transactions", <BsArrowLeftRight />, null),
   getItem("All Fixed Deposits", "fixed-deposits", <GiPiggyBank />, null),
   getItem("Branch Management", "branch", <BankOutlined />),

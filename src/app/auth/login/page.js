@@ -1,35 +1,48 @@
 "use client";
 
-import React from "react";
 import "./login.css";
-import { Form, Input, Button, Checkbox, Typography } from "antd";
+import { Form, Input, Button, Checkbox, Typography, Space, Spin } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { validEmail } from "@/constants/regex";
 import { loginByEmail, loginByUsername } from "@/api/dataProvider";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useUserStore } from "@/store/store";
+import { useState } from "react";
 
 const { Title, Link } = Typography;
 
 const LoginForm = () => {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const setUser = useUserStore((state) => state.setUser);
+  const setToken = useUserStore((state) => state.setToken);
   const onFinish = async (values) => {
     console.log("Received values of form: ", values);
-    if (validEmail.test(values.username_email)) {
-      console.log("Email");
-      const res = loginByEmail(values.username_email, values.password, values.remember);
-      if (res.status === "success") {
-        redirect("/home/dashboard");
+    setLoading(true);
+    let res;
+    try {
+      if (validEmail.test(values.username_email)) {
+        console.log("Email");
+        res = await loginByEmail(values.username_email, values.password);
+      } else {
+        console.log("Username");
+        res = await loginByUsername(values.username_email, values.password);
+      }
+      setLoading(false);
+      if (res.status === 200) {
+        if (values.remember) {
+          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("user", res.data.user);
+        }
+        setUser(res.data.user);
+        setToken(res.data.token);
+        router.replace("/home/dashboard");
       } else {
         console.log(res);
       }
-    } else {
-      console.log("Username");
-      const res = loginByUsername(values.username_email, values.password, values.remember);
-      if (res.status === "success") {
-        redirect("/home/dashboard");
-      } else {
-        console.log(res);
-      }
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
     }
   };
   return (
@@ -92,7 +105,6 @@ const LoginForm = () => {
             <Checkbox className="login-form-left-align">Remember me</Checkbox>
           </Form.Item>
         </Form.Item>
-
         <Form.Item style={{ marginBottom: "10px", fontSize: 13 }}>
           <Button
             type="primary"
@@ -109,6 +121,9 @@ const LoginForm = () => {
               Register Now
             </Link>
           </span>
+        </Form.Item>
+        <Form.Item>
+          <Spin spinning={loading} />
         </Form.Item>
       </Form>
     </>
