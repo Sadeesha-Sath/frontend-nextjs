@@ -1,10 +1,12 @@
 "use client"
 import React, { useEffect, useState} from 'react';
-import { Button, Form, Input, Select, Space, Tooltip, Typography } from 'antd';
+import { Button, Form, Input, Select, Typography} from 'antd';
 const { Option } = Select;
+const { Title, Link } = Typography;
 const onFinish = (values) => {
   console.log('Received values of form: ', values);
 };
+import "./style.css" 
 
 const branch_fetch = async () => {
     try {
@@ -91,7 +93,7 @@ const FundTransfer = () => {
           .then((accounts)=>{
             setAccountList(accounts);
           }).catch((error)=>{
-              console.error(error);
+              console.log(error)
           })
       }, [])
 
@@ -109,22 +111,35 @@ const FundTransfer = () => {
     }
 
     return(
+  <div className='form-container'>
 
-  <Form
+  <Form 
     name="transaction-form"
     onFinish={onFinish}
     labelCol={{
-      span: 8,
+      span: 10,
+      justifyContent:'center',
     }}
     wrapperCol={{
-      span: 16,
+      span: 10,
     }}
     style={{
-      maxWidth: 600,
+      backgroundColor: '#F5F7F8', 
+      maxWidth: '500px',
+      marginBlock:'10px',
+      paddingBlock:'75px',
+      paddingInline: '25px',
+      borderRadius: '10px',
+      border: '0.2px solid grey',
     }}
   >
+    <center>
+        <Title style={{ marginBottom: "40px" }} level={3}>
+          Fund Transfer
+        </Title>
+      </center> 
     <Form.Item label="Pay From">
-    <Form.Item
+      <Form.Item
           name="payeraccount"
           noStyle
           rules={[
@@ -138,7 +153,10 @@ const FundTransfer = () => {
         className='select-container'
         onChange = {(value) => setAccount(value)}
         value={account}
-        style={{ width: 200 }}
+        style={{ 
+          width: 200
+        
+        }}
         placeholder="Choose a bank account"
       >
         {accountList.map((option) =>(
@@ -150,12 +168,12 @@ const FundTransfer = () => {
       </Select>
         </Form.Item>
     </Form.Item>
-    
-
+  
     <Form.Item
       label="Payee Account Number"
       style={{
         marginBottom: 0,
+        color:"#F4CE14"
       }}
     >
         <Form.Item
@@ -167,8 +185,8 @@ const FundTransfer = () => {
             }
           ]}
           style={{
-            display: 'inline-block',
-            width: 'calc(50% - 8px)',
+            display: 'flex',
+            width: '800px'
           }}
         >
           <Input placeholder="Enter Account Number" />
@@ -190,8 +208,8 @@ const FundTransfer = () => {
             }
           ]}
           style={{
-            display: 'inline-block',
-            width: 'calc(50% - 8px)',
+            display: 'flex',
+            width: '800px',
           }}
         >
           <Input placeholder="Enter the amount" />
@@ -214,12 +232,15 @@ const FundTransfer = () => {
         ))}
       </Select>
     </Form.Item>
+    
     <Form.Item label=" " colon={false}>
       <Button type="primary" htmlType="submit">
         Proceed
       </Button>
     </Form.Item>
   </Form>
+  </div>
+ 
 ) 
 };
 export default FundTransfer;

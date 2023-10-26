@@ -1,51 +1,17 @@
-.centered-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    margin-top: 30px;
-    height: 100vh; /* 100% of the viewport height */
-  }
-  
-  .select-container{
-    margin:20px
-  }
-  .generate-button {
-    margin-top:20px;
-  
-  }
-  .title-container{
-    text-align: center;
-  }
-  
-  .input-container{
-    display: flex;
-    width: 80vw;
-    justify-content: center;
-  }
-  
-  .table-container{
-    width:60vw;
-    height: 75vh;
-    overflow-x: auto; 
-  }
-  
-  @media (max-width: 768px) {
-    .centered-container {
-      margin-top: 10px; /* Adjust the margin for smaller screens */
-    }
-  
-    .select-container {
-      margin: 10px; /* Adjust the margin for smaller screens */
-    }
-  
-    .generate-button {
-      margin-top: 10px; /* Adjust the margin for smaller screens */
-    }
-    .table-container {
-      width: 100%; /* Adjust the width for smaller screens */
-      max-height: 50vh; /* Limit the maximum height for smaller screens, adjust as needed */
-    }
-  }
-  
-  
+.form-container{
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  height: 100vh;
+}
+
+.input-container{
+  display: flex;
+  width: 80vw;
+  justify-content: center;
+}
+
+
+.form-labelrow{
+  justify-content: center
+}
