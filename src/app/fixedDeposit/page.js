@@ -8,15 +8,15 @@ const onFinish = (values) => {
 };
 import "./style.css" 
 
-const branch_fetch = async () => {
+const rates_fetch = async () => {
     try {
-      const response = await fetch("http://localhost:8080/report/branches");
+      const response = await fetch("http://localhost:8080/interest");
       const json = await response.json();
-      const branches = json[0].map(item => ({
-        value: item.BranchID,
-        label: item.BranchName
-      }));
-      return branches;
+      const rates_json = {}
+      json.forEach(element => {
+          rates_json[element.Duration] = element.InterestRate
+      });
+      return rates_json;
 
     } catch (error) {
       console.log("error", error);
@@ -41,49 +41,21 @@ const account_fetch = async () => {
 
 
 
-//need to be continued
-const userinput_fetch = async (account)=>{
-  try {
-    const response = await fetch("http://localhost:8080/fundtransfer/proceed", {
-      method: 'POST',
-      body: JSON.stringify({accountNo: branch}),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-      
-    });
-    const json = await response.json();
-    const view = json[0][0].map((item, index) => ({
-      key: (index+1).toString(),
-      trId: item.TransactionID,
-      debAcc: item.DebitedAcc, 
-      creAcc: item.CreditedAcc, 
-      trnType: item.TrnType, 
-      amount: item.Amount,
-      debBr: item.DebitedBr,
-      creBr: item.CreditedBr
-
-    }));
-    return view;
-
-  } catch (error) {
-    console.log("error", error);
-  }
-};
-
-
-
  
-const FundTransfer = () => { 
-    const [branch, setBranch] = useState(null);
-    const [branchList, setBranchList] = useState([]);
+const FixedDeposit = () => { 
     const [account, setAccount] = useState(null);
     const [accountList, setAccountList] = useState([]);
+    const [selectedPeriod, setSelectedPeriod] = useState(null);
+    const [interestRates, setInterestRates] = useState({})
+    const [interestRate, setInterestRate] = useState(null);
+    const [showRate, setShowRate] = useState(null);
+
+
 
     useEffect(()=>{
-        branch_fetch()
-          .then((branches)=>{
-            setBranchList(branches);
+        rates_fetch()
+          .then((rates)=>{
+            setInterestRates(rates);
           }).catch((error)=>{
               console.error(error);
           })
@@ -93,23 +65,14 @@ const FundTransfer = () => {
         account_fetch()
           .then((accounts)=>{
             setAccountList(accounts);
+            console.log(accounts);
           }).catch((error)=>{
               console.log(error)
           })
       }, [])
 
         
-    const handleClick= async() => {
-      if(reportType == 'transaction'){
-          const data =await view_fetch(branch);
-          setView(data);
-          setShowtrTable(true);
-      }
-      else{
-        setShowtrTable(false);
-      }
-
-    }
+   
 
     return(
   <div className='form-container'>
@@ -135,17 +98,17 @@ const FundTransfer = () => {
   >
     <center>
         <Title style={{ marginBottom: "40px" }} level={3}>
-          Fund Transfer
+          Open a Fixed Deposit
         </Title>
       </center> 
-    <Form.Item label="Pay From">
+    <Form.Item label="Savings Account">
       <Form.Item
-          name="payeraccount"
+          name="savingsaccount"
           noStyle
           rules={[
             {
               required: true,
-              message: 'Payer Account is required',
+              message: 'Savings Account is required',
             },
           ]}
         >
@@ -168,30 +131,52 @@ const FundTransfer = () => {
       </Select>
         </Form.Item>
     </Form.Item>
-  
-    <Form.Item
-      label="Payee Account Number"
-      style={{
-        marginBottom: 0,
-        color:"#F4CE14"
-      }}
-    >
-        <Form.Item
-          name="payeeaccount"
+
+    <Form.Item label="Maturity Period">
+      <Form.Item
+          name="period"
+          noStyle
           rules={[
             {
               required: true,
-              message: "Payee account is required"
-            }
+              message: 'Select a period',
+            },
           ]}
-          style={{
-            display: 'flex',
-            width: '800px'
-          }}
         >
-          <Input placeholder="Enter Account Number" />
-        </Form.Item>
+        <Select
+            className='select-container'
+            onChange = {(value) => {
+              setSelectedPeriod(value);
+              setInterestRate(interestRates[value]);
+              setShowRate(true);
+            }}
+            value={selectedPeriod}
+            style={{ 
+              width: 200
+            }}
+            placeholder="Select Maturity Period"
+      >
+          <Select.Option key="p1" value="6">
+                  6 Months
+          </Select.Option>
+          <Select.Option key="p2" value="12">
+                  1 Year
+          </Select.Option>
+          <Select.Option key="p3" value="36">
+                  3 Years
+          </Select.Option>
+          </Select>
+
+        </Form.Item>  
+
     </Form.Item>
+    {showRate && 
+      <Form.Item label="Interest Rate"
+      style={{color:"Red", fontWeight: 'bold'}}>
+          {(interestRate*100).toFixed(2)}%
+      </Form.Item>
+    }
+
 
     <Form.Item
       label="Amount"
@@ -204,7 +189,7 @@ const FundTransfer = () => {
           rules={[
             {
               required: true,
-              message: "Amount is required to proc"
+              message: "Amount is required to proceed"
             }
           ]}
           style={{
@@ -216,31 +201,16 @@ const FundTransfer = () => {
         </Form.Item>
     </Form.Item>
 
-
-    <Form.Item label="Payee Account Branch">
-          <Select
-        className='select-container'
-        value={branch}
-        onChange={(value) => setBranch(value)}
-        style={{ width: 200 }}
-        placeholder="Select a Branch"
-      >
-        {branchList.map((option) =>(
-            <Select.Option key={option.value} value={option.value}>
-            {option.label}
-          </Select.Option>
-        ))}
-      </Select>
-    </Form.Item>
-    
+  
     <Form.Item label=" " colon={false}>
       <Button type="primary" htmlType="submit">
         Proceed
       </Button>
     </Form.Item>
   </Form>
+
   </div>
  
 ) 
 };
-export default FundTransfer;
+export default FixedDeposit;

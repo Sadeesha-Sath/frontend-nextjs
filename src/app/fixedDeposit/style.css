@@ -1,0 +1,17 @@
+.form-container{
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  height: 100vh;
+}
+
+.input-container{
+  display: flex;
+  width: 80vw;
+  justify-content: center;
+}
+
+
+.form-labelrow{
+  justify-content: center
+}
