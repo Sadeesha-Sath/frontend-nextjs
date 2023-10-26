@@ -14,68 +14,119 @@ const getItem = (label, key, icon, children, type) => ({
 });
 
 const menuItemsCustomer = [
-  getItem("Dashboard", "dashboard", <HomeOutlined />, null),
-  getItem("My Accounts", "accounts", <CiWallet />, null),
-  getItem("All Transactions", "transactions", <BsArrowLeftRight />, null),
-  getItem("All Fixed Deposits", "fixed-deposits", <GiPiggyBank />, null),
-  getItem("Loans", "loan", <BankOutlined />, [
-    getItem("All Loans", "my-loans", null, null),
-    getItem("Request Online Loan", "request-online-loan", null, null),
-    getItem("My Loan Applications", "my-loan-applications", null, null),
-    getItem("My Pending Installements", "my-pending-installements", null, null),
+  getItem("Dashboard", "/home/dashboard", <HomeOutlined />, null),
+  getItem("My Accounts", "/home/accounts", <CiWallet />, null),
+  getItem("Transfer Funds", "/home/transactions/new", <FcMoneyTransfer />, null),
+  getItem("All Transactions", "/home/transactions", <BsArrowLeftRight />, null),
+  getItem("All Fixed Deposits", "/home/fixed-deposits", <GiPiggyBank />, null),
+  getItem("Loans", "loans", <BankOutlined />, [
+    getItem("All Loans", "/home/loans", null, null),
+    getItem("Request Online Loan", "/home/loans/loanApplications/new", null, null),
+    getItem("My Loan Applications", "/home/loans/loanApplications", null, null),
+    getItem("My Pending Installments", "/home/loans/installments/pending", null, null),
   ]),
 ];
 
 const menuItemsEmployee = [
-  getItem("Dashboard", "dashboard", <HomeOutlined />, null),
-  getItem("All Accounts", "accounts", <CiWallet />, null),
-  getItem("Transfer Funds", "transfer-funds", <FcMoneyTransfer />, null),
-  getItem("All Fixed Deposits", "fixed-deposits", <GiPiggyBank />, null),
-  getItem("Users", "users", <GoPerson />),
-  getItem("Customers", "customers", <BsPeople />),
-  getItem("Employees", "employees", <BsFilePerson />),
-  getItem("Loan Management", "loan", <BankOutlined />, [
-    getItem("All Active Loans", "active-loans", null, null),
-    getItem("Request Offline Loan", "request-offline-loan", null, null),
-    getItem("All Loan Applications", "loan-applications", null, null),
-    getItem("Pending Installements", "pending-installements", null, null),
+  getItem("Dashboard", "/home/dashboard", <HomeOutlined />, null),
+  getItem("All Accounts", "/home/accounts", <CiWallet />, null),
+  getItem(
+    "Transfer Funds",
+    "/home/transactions/new",
+    <FcMoneyTransfer />,
+    null
+  ),
+  getItem(
+    "All Fixed Deposits",
+    "/home/fixed-deposits",
+    <GiPiggyBank />,
+    null
+  ),
+  getItem("Users", "/home/users", <GoPerson />),
+  getItem("Customers", "/home/customers", <BsPeople />),
+  getItem("Employees", "/home/employees", <BsFilePerson />),
+  getItem("Loan Management", "loans", <BankOutlined />, [
+    getItem("All Loans", "/home/loans", null, null),
+    getItem(
+      "Request Offline Loan",
+      "/home/loans/loanApplications/new",
+      null,
+      null
+    ),
+    getItem(
+      "All Loan Applications",
+      "/home/loans/loanApplications",
+      null,
+      null
+    ),
+    getItem(
+      "Pending Installements",
+      "/home/loans/installments/pending",
+      null,
+      null
+    ),
   ]),
 ];
 
 const menuItemsBManager = [
-  getItem("Dashboard", "dashboard", <HomeOutlined />, null),
-  getItem("All Accounts", "accounts", <CiWallet />, null),
-  getItem("Transfer Funds", "transfer-funds", <FcMoneyTransfer />, null),
-  getItem("All Transactions", "transactions", <BsArrowLeftRight />, null),
-  getItem("All Fixed Deposits", "fixed-deposits", <GiPiggyBank />, null),
-  getItem("Users", "users", <GoPerson />),
-  getItem("Customers", "customers", <BsPeople />),
-  getItem("Employees", "employees", <BsFilePerson />),
-  getItem("Loan Management", "loan", <BankOutlined />, [
-    getItem("All Active Loans", "active-loans", null, null),
-    getItem("Request Offline Loan", "request-offline-loan", null, null),
-    getItem("All Loan Applications", "loan-applications", null, null),
-    getItem("Pending Installements", "pending-installements", null, null),
-    getItem("Overdue Installments", "overdue-installements", null, null),
+  getItem("Dashboard", "/home/dashboard", <HomeOutlined />, null),
+  getItem("All Accounts", "/home/accounts", <CiWallet />, null),
+  getItem("Transfer Funds", "/home/transactions/new", <FcMoneyTransfer />, null),
+  getItem("All Transactions", "/home/transactions", <BsArrowLeftRight />, null),
+  getItem("All Fixed Deposits", "/home/fixed-deposits", <GiPiggyBank />, null),
+  getItem("Users", "/home/users", <GoPerson />),
+  getItem("Customers", "/home/customers", <BsPeople />),
+  getItem("Employees", "/home/employees", <BsFilePerson />),
+  getItem("Loan Management", "loans", <BankOutlined />, [
+    getItem("All Loans", "/home/loans", null, null),
+    getItem("Request Offline Loan", "/home/loans/loanApplications/new", null, null),
+    getItem("All Loan Applications", "/home/loans/loanApplications", null, null),
+    getItem("Pending Installements", "/home/loans/installments/pending", null, null),
+    getItem("Overdue Installments", "/home/loans/installments/overdue", null, null),
   ]),
 ];
 
 const menuItemsAdmin = [
-  getItem("Dashboard", "dashboard", <HomeOutlined />, null),
-  getItem("All Accounts", "accounts", <CiWallet />, null),
-  getItem("Transfer Funds", "transfer-funds", <FcMoneyTransfer />, null),
-  getItem("All Transactions", "transactions", <BsArrowLeftRight />, null),
-  getItem("All Fixed Deposits", "fixed-deposits", <GiPiggyBank />, null),
+  getItem("Dashboard", "/home/dashboard", <HomeOutlined />, null),
+  getItem("All Accounts", "/home/accounts", <CiWallet />, null),
+  getItem(
+    "Transfer Funds",
+    "/home/transactions/new",
+    <FcMoneyTransfer />,
+    null
+  ),
+  getItem("All Transactions", "/home/transactions", <BsArrowLeftRight />, null),
+  getItem("All Fixed Deposits", "/home/fixed-deposits", <GiPiggyBank />, null),
   getItem("Branch Management", "branch", <BankOutlined />),
-  getItem("Users", "users", <GoPerson />),
-  getItem("Customers", "customers", <BsPeople />),
-  getItem("Employees", "employees", <BsFilePerson />),
-  getItem("Loan Management", "loan", <BankOutlined />, [
-    getItem("All Active Loans", "active-loans", null, null),
-    getItem("Request Offline Loan", "request-offline-loan", null, null),
-    getItem("All Loan Applications", "loan-applications", null, null),
-    getItem("Pending Installements", "pending-installements", null, null),
-    getItem("Overdue Installments", "overdue-installements", null, null),
+  getItem("Users", "/home/users", <GoPerson />),
+  getItem("Customers", "/home/customers", <BsPeople />),
+  getItem("Employees", "/home/employees", <BsFilePerson />),
+  getItem("Loan Management", "loans", <BankOutlined />, [
+    getItem("All Loans", "/home/loans", null, null),
+    getItem(
+      "Request Offline Loan",
+      "/home/loans/loanApplications/new",
+      null,
+      null
+    ),
+    getItem(
+      "All Loan Applications",
+      "/home/loans/loanApplications",
+      null,
+      null
+    ),
+    getItem(
+      "Pending Installements",
+      "/home/loans/installments/pending",
+      null,
+      null
+    ),
+    getItem(
+      "Overdue Installments",
+      "/home/loans/installments/overdue",
+      null,
+      null
+    ),
   ]),
 ];
 

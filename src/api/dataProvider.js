@@ -69,11 +69,14 @@ const signup = async (data) => {
     method: "POST",
     body: data,
   });
-  if (response.status === 200) {
-    console.log(response);
-    return response.data;
-    // TODO Make Sure to redirect to login page in the other function
-  }
+  return response;
+};
+
+const checkUsername = async (data) => {
+  const response = await fetchJson("auth/checkUsername", {
+    method: "POST",
+    body: data,
+  });
   return response;
 };
 
@@ -108,4 +111,5 @@ export {
   addEmployee,
   addCustomer,
   verifyToken,
+  checkUsername,
 };
