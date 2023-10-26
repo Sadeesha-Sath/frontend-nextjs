@@ -52,6 +52,7 @@ const LoginForm = () => {
           Welcome Back!
         </Title>
       </center>
+      <center>
       <Form
         security="true"
         name="login_form"
@@ -95,7 +96,7 @@ const LoginForm = () => {
           <Link
             className="login-form-right-align"
             style={{ fontSize: 13 }}
-            href=""
+            href="/auth/reset_password"
           >
             Forgot password?
           </Link>
@@ -117,7 +118,7 @@ const LoginForm = () => {
         <Form.Item style={{ float: "left", marginBottom: 0 }}>
           New to A Bank?{" "}
           <span style={{ color: "#1777FF" }}>
-            <Link href="" target="_blank">
+            <Link href="/auth/signup">
               Register Now
             </Link>
           </span>
@@ -126,6 +127,7 @@ const LoginForm = () => {
           <Spin spinning={loading} />
         </Form.Item>
       </Form>
+      </center>
     </>
   );
 };

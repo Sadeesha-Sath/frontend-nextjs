@@ -1,15 +1,14 @@
 "use client";
-import { menuItemsAdmin, menuItemsBManager } from "@/constants/menuItems";
+import { menuItemsAdmin, menuItemsBManager, menuItemsEmployee,menuItemsCustomer } from "@/constants/menuItems";
 import { useUserStore } from "@/store/store";
 import { Menu, Layout, Typography, Button, Spin } from "antd";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useEffect } from "react";
 import checkToken from "../auth/checkToken";
 
 const { Title } = Typography;
 
 const { Header, Footer, Content, Sider } = Layout;
-
 const HomeLayout = ({ children }) => {
   const user = useUserStore((state) => state.user);
   const logout = useUserStore((state) => state.logout);
@@ -22,6 +21,8 @@ const HomeLayout = ({ children }) => {
       router.replace("/auth/login/");
     }
   };
+  const path = usePathname();
+  console.log(path);
   useEffect(() => {
     console.log("User Effect FROM LAYOUT Firing");
     verifyToken();
@@ -60,15 +61,26 @@ const HomeLayout = ({ children }) => {
               Log Out
             </Button>
           </Header>
-          <Layout style={{ minHeight: "85vh", background: "#FAFAFA" }}>
+          <Layout hasSider style={{ minHeight: "85vh", background: "#FAFAFA" }}>
             <Sider
               className="main-nav"
               width={256}
-              style={{ background: "#FAFAFA", borderRadius: 20 }}
+              style={{
+                background: "#FAFAFA",
+                borderRadius: 20,
+                overflow: "auto",
+                height: "85vh",
+              }}
             >
               <Menu
                 defaultSelectedKeys={["dashboard"]}
-                onClick={(e) => console.log(e)}
+                onClick={(e) => {
+                  console.log(e.key);
+                  if (e.key !== path) {
+                    console.log("Changing Route");
+                    router.push(e.key);
+                  }
+                }}
                 style={{
                   width: 256,
                   position: "relative",
