@@ -235,7 +235,10 @@ const SignUpForm = () => {
                   ]}
                   label="Date of Birth"
                 >
-                  <DatePicker onChange={onDatePickerChange} format="YYYY-MM-DD" />
+                  <DatePicker
+                    onChange={onDatePickerChange}
+                    format="YYYY-MM-DD"
+                  />
                 </Form.Item>
               ) : null}
               <Form.Item

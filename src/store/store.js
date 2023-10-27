@@ -7,4 +7,3 @@ export const useUserStore = create((set) => ({
   setToken: (token) => set({ token }),
   logout: () => set({ user: null, token: null }),
 }));
-

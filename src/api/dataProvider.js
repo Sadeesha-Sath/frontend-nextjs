@@ -81,7 +81,7 @@ const checkUsername = async (data) => {
 };
 
 const addEmployee = async (data) => {
-  const response = await fetchJson("employee/new", {
+  const response = await fetchJson("employees/new", {
     method: "POST",
     body: data,
   });
@@ -93,14 +93,26 @@ const addEmployee = async (data) => {
 };
 
 const addCustomer = async (data) => {
-  const response = await fetchJson("customer/new", {
+  const response = await fetchJson("customers/new", {
     method: "POST",
     body: data,
   });
-  if (response.status === 200) {
-    console.log(response);
-    return response.data;
-  }
+  return response;
+};
+
+const getAllAccounts = async (data) => {
+  const queryParams = new URLSearchParams(data);
+  const response = await fetchJson(`accounts?${queryParams}`, {
+    method: "GET",
+  });
+  return response;
+};
+
+const getMyAccounts = async (data) => {
+  const queryParams = new URLSearchParams(data);
+  const response = await fetchJson(`accounts/my?${queryParams}`, {
+    method: "GET",
+  });
   return response;
 };
 
@@ -112,4 +124,6 @@ export {
   addCustomer,
   verifyToken,
   checkUsername,
+  getAllAccounts,
+  getMyAccounts,
 };

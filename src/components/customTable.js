@@ -1,3 +1,4 @@
+"use client"
 import { Table } from "antd";
 import { useState, useEffect } from "react";
 
@@ -12,6 +13,7 @@ const CustomTable = ({ columns, dataMethod, key }) => {
   });
 
   const fetchData = async () => {
+    console.log(tableParams);
     setLoading(true);
     const response = await dataMethod(tableParams);
     if (response.status === 200) {
