@@ -1,7 +1,7 @@
 .signup-form {
     max-width: 100%;
-    width: 20vw;
-    min-width: 100px;
+    /* width: 20vw; */
+    min-width: 20vw;
 }
 
 .signup-form-left-align {

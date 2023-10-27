@@ -1,0 +1,9 @@
+.page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75vh;
+  }
+.content-container {
+    text-align: center; /* Horizontally center the content */
+  }
