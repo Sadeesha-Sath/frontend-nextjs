@@ -26,8 +26,9 @@
 
 .table-container{
   display: flex;
-  width:60vw;
+  width: 50vw;
   height: 75vh;
+  justify-content: center;
   overflow: auto;
 }
 
