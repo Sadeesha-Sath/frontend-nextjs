@@ -7,7 +7,7 @@ const { useState, useEffect } = require("react");
 const {Title} = Typography;
 
 const AllEmployees = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const fetchData = async () => {
     const res = await getEmployees();
     if (res.status === 200) {
@@ -18,7 +18,7 @@ const AllEmployees = () => {
   };
   useEffect(() => {
     fetchData();
-  });
+  }, []);
   const columns = [
     {
       title: "Employee ID",
@@ -72,7 +72,7 @@ const AllEmployees = () => {
       <Title level={2} key={"Title"}>
         Employees
       </Title>
-      {data.length === 0 ? (
+      {data === null ? (
         <Spin />
       ) : (
         <Table columns={columns} dataSource={data} scroll={{ x: "max-content"}} />

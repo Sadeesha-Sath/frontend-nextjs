@@ -7,7 +7,7 @@ const { useState, useEffect } = require("react");
 const {Title} = Typography;
 
 const AllCustomers = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const fetchData = async () => {
     const res = await getCustomers();
     if (res.status === 200) {
@@ -18,7 +18,7 @@ const AllCustomers = () => {
   };
   useEffect(() => {
     fetchData();
-  });
+  }, []);
   const columns = [
     {
       title: "Customer ID",
@@ -82,7 +82,7 @@ const AllCustomers = () => {
       <Title level={2} key={"Title"}>
         Customers
       </Title>
-      {data.length === 0 ? (
+      {data === null ? (
         <Spin />
       ) : (
         <Table columns={columns} dataSource={data} scroll={{ x: "max-content"}} />
