@@ -1,5 +1,6 @@
 import { useUserStore } from "@/store/store";
 import apiConfig from "@/constants/config";
+import { stringify } from "qs";
 
 const fetchJson = async (url, options = {}) => {
   const fullUrl = `${apiConfig.baseUrl}/${url}`;
@@ -101,16 +102,54 @@ const addCustomer = async (data) => {
 };
 
 const getAllAccounts = async (data) => {
-  const queryParams = new URLSearchParams(data);
+  console.log(data);
+  const queryParams = stringify(data);
+  console.log(`accounts?${queryParams}`);
   const response = await fetchJson(`accounts?${queryParams}`, {
+    method: "GET",
+  });
+  response.data = response.data.map((item) => ({
+    ...item,
+    accountType: item.SavingsPlanType === null ? "Current" : "Savings",
+    key: item.AccountNumber,
+  }));
+  return response;
+};
+
+const getMyAccounts = async (data) => {
+  console.log(data);
+  const queryParams = stringify(data);
+  console.log(queryParams);
+  const response = await fetchJson(`accounts/my?${queryParams}`, {
     method: "GET",
   });
   return response;
 };
 
-const getMyAccounts = async (data) => {
-  const queryParams = new URLSearchParams(data);
-  const response = await fetchJson(`accounts/my?${queryParams}`, {
+const getBranchDetailsMinimal = async () => {
+  const queryParams = stringify({ level: "minimal" });
+  const response = await fetchJson(`branches?${queryParams}`, {
+    method: "GET",
+  });
+  return response;
+};
+
+const getCustomers = async () => {
+  const response = await fetchJson(`customers`, {
+    method: "GET",
+  });
+  return response;
+};
+
+const getUsers = async () => {
+  const response = await fetchJson("users", {
+    method: "GET",
+  });
+  return response;
+};
+
+const getEmployees = async () => {
+  const response = await fetchJason("employees", {
     method: "GET",
   });
   return response;
@@ -126,4 +165,8 @@ export {
   checkUsername,
   getAllAccounts,
   getMyAccounts,
+  getBranchDetailsMinimal,
+  getCustomers,
+  getUsers,
+  getEmployees,
 };
