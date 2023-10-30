@@ -42,52 +42,16 @@ const account_fetch = async () => {
 
 
 //need to be continued
-const userinput_fetch = async (account)=>{
-  try {
-    const response = await fetch("http://localhost:8080/fundtransfer/proceed", {
-      method: 'POST',
-      body: JSON.stringify({accountNo: branch}),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-      
-    });
-    const json = await response.json();
-    const view = json[0][0].map((item, index) => ({
-      key: (index+1).toString(),
-      trId: item.TransactionID,
-      debAcc: item.DebitedAcc, 
-      creAcc: item.CreditedAcc, 
-      trnType: item.TrnType, 
-      amount: item.Amount,
-      debBr: item.DebitedBr,
-      creBr: item.CreditedBr
 
-    }));
-    return view;
-
-  } catch (error) {
-    console.log("error", error);
-  }
-};
-
-
-
- 
 const FundTransfer = () => { 
-    const [branch, setBranch] = useState(null);
-    const [branchList, setBranchList] = useState([]);
     const [account, setAccount] = useState(null);
     const [accountList, setAccountList] = useState([]);
+    const [trnType, setTrnType] = useState('atm');
+    const trnTypes = [
+      { value: 'atm', label: 'ATM' },
+      { value: 'online', label: 'Online' },
+    ];
 
-    useEffect(()=>{
-        branch_fetch()
-          .then((branches)=>{
-            setBranchList(branches);
-          }).catch((error)=>{
-              console.error(error);
-          })
-      }, [])
 
       useEffect(()=>{
         account_fetch()
@@ -98,24 +62,12 @@ const FundTransfer = () => {
           })
       }, [])
 
-        
-    const handleClick= async() => {
-      if(reportType == 'transaction'){
-          const data =await view_fetch(branch);
-          setView(data);
-          setShowtrTable(true);
-      }
-      else{
-        setShowtrTable(false);
-      }
-
-    }
 
     return(
   <div className='form-container'>
 
   <Form 
-    name="transaction-form"
+    name="fixeddeposit-form"
     onFinish={onFinish}
     labelCol={{
       span: 10,
@@ -168,7 +120,39 @@ const FundTransfer = () => {
       </Select>
         </Form.Item>
     </Form.Item>
+
+    <Form.Item label="Transaction Type">
+      <Form.Item
+          name="trnType"
+          noStyle
+          rules={[
+            {
+              required: true,
+              message: 'Transaction Type is required',
+            },
+          ]}
+        >
+          <Select
+        className='select-container'
+        onChange = {(value) => setTrnType(value)}
+        value={trnType}
+        style={{ 
+          width: 200
+        
+        }}
+        placeholder="Select Transaction Type"
+      >
+        {trnTypes.map((option) =>(
+          <Select. Option key = {option.value} trnType = {option.value}>
+            {option.label}
+          </Select. Option>
+        ))}
+        
+      </Select>
+        </Form.Item>
+    </Form.Item>
   
+  {trnType == 'online' && 
     <Form.Item
       label="Payee Account Number"
       style={{
@@ -189,9 +173,11 @@ const FundTransfer = () => {
             width: '800px'
           }}
         >
-          <Input placeholder="Enter Account Number" />
+          <Input placeholder="Enter Account Number"
+          disabled={trnType === 'atm'} />
         </Form.Item>
     </Form.Item>
+}
 
     <Form.Item
       label="Amount"
@@ -217,21 +203,7 @@ const FundTransfer = () => {
     </Form.Item>
 
 
-    <Form.Item label="Payee Account Branch">
-          <Select
-        className='select-container'
-        value={branch}
-        onChange={(value) => setBranch(value)}
-        style={{ width: 200 }}
-        placeholder="Select a Branch"
-      >
-        {branchList.map((option) =>(
-            <Select.Option key={option.value} value={option.value}>
-            {option.label}
-          </Select.Option>
-        ))}
-      </Select>
-    </Form.Item>
+  
     
     <Form.Item label=" " colon={false}>
       <Button type="primary" htmlType="submit">
