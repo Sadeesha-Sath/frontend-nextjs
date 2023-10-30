@@ -67,7 +67,7 @@ const FundTransfer = () => {
   <div className='form-container'>
 
   <Form 
-    name="fixeddeposit-form"
+    name="fundtransfer-form"
     onFinish={onFinish}
     labelCol={{
       span: 10,
