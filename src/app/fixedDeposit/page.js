@@ -78,7 +78,7 @@ const FixedDeposit = () => {
   <div className='form-container'>
 
   <Form 
-    name="transaction-form"
+    name="fixeddeposit-Form"
     onFinish={onFinish}
     labelCol={{
       span: 10,
