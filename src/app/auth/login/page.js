@@ -18,6 +18,7 @@ const LoginForm = () => {
   const setToken = useUserStore((state) => state.setToken);
   const onFinish = async (values) => {
     console.log("Received values of form: ", values);
+    console.log(values);
     setLoading(true);
     let res;
     try {

@@ -149,7 +149,7 @@ const getUsers = async () => {
 };
 
 const getEmployees = async () => {
-  const response = await fetchJason("employees", {
+  const response = await fetchJson("employees", {
     method: "GET",
   });
   return response;

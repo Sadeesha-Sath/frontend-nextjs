@@ -30,6 +30,7 @@ const menuItemsCustomer = [
 const menuItemsEmployee = [
   getItem("Dashboard", "/home/dashboard", <HomeOutlined />, null),
   getItem("All Accounts", "/home/accounts", <CiWallet />, null),
+  getItem("Create Account", "/home/savingsaccount", <CiWallet />, null),
   getItem(
     "Transfer Funds",
     "/home/transactions/new",
