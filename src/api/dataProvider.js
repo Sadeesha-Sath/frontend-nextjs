@@ -4,7 +4,7 @@ import { stringify } from "qs";
 
 const fetchJson = async (url, options = {}) => {
   const fullUrl = `${apiConfig.baseUrl}/${url}`;
-  // console.log(fullUrl);
+  console.log(fullUrl);
   if (options.body) {
     if (typeof options.body === "object") {
       options.body = JSON.stringify(options.body);
