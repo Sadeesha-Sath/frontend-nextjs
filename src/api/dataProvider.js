@@ -191,6 +191,13 @@ const getBranches = async () => {
   return response;
 };
 
+const getAllTransactions = async () => {
+  const response = await fetchJson("transactions", {
+    method: "GET",
+  });
+  return response;
+};
+
 export {
   loginByEmail,
   loginByUsername,
@@ -210,4 +217,5 @@ export {
   getLoans,
   getActiveLoans,
   getBranches,
+  getAllTransactions,
 };

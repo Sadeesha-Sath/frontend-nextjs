@@ -53,80 +53,77 @@ const LoginForm = () => {
         </Title>
       </center>
       <center>
-      <Form
-        security="true"
-        name="login_form"
-        className="login-form"
-        initialValues={{
-          remember: true,
-        }}
-        onFinish={onFinish}
-      >
-        <Form.Item
-          name="username_email"
-          rules={[
-            {
-              required: true,
-              message: "Please input your Username/Email!",
-            },
-          ]}
+        <Form
+          security="true"
+          name="login_form"
+          className="login-form"
+          initialValues={{
+            remember: true,
+          }}
+          onFinish={onFinish}
         >
-          <Input
-            prefix={<UserOutlined className="site-form-item-icon" />}
-            placeholder="Username/Email"
-          />
-        </Form.Item>
-        <Form.Item
-          style={{ marginBottom: "0px" }}
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: "Please input your Password!",
-            },
-          ]}
-        >
-          <Input
-            prefix={<LockOutlined className="site-form-item-icon" />}
-            type="password"
-            placeholder="Password"
-          />
-        </Form.Item>
-        <Form.Item style={{ marginBottom: "10px", color: "#1777FF" }}>
-          <Link
-            className="login-form-right-align"
-            style={{ fontSize: 13 }}
-            href="/auth/reset_password"
+          <Form.Item
+            name="username_email"
+            rules={[
+              {
+                required: true,
+                message: "Please input your Username/Email!",
+              },
+            ]}
           >
-            Forgot password?
-          </Link>
-        </Form.Item>
-        <Form.Item style={{ marginBottom: "15px" }}>
-          <Form.Item name="remember" valuePropName="checked" noStyle>
-            <Checkbox className="login-form-left-align">Remember me</Checkbox>
+            <Input
+              prefix={<UserOutlined className="site-form-item-icon" />}
+              placeholder="Username/Email"
+            />
           </Form.Item>
-        </Form.Item>
-        <Form.Item style={{ marginBottom: "10px", fontSize: 13 }}>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="login-form-button"
+          <Form.Item
+            style={{ marginBottom: "0px" }}
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: "Please input your Password!",
+              },
+            ]}
           >
-            Log in
-          </Button>
-        </Form.Item>
-        <Form.Item style={{ float: "left", marginBottom: 0 }}>
-          New to A Bank?{" "}
-          <span style={{ color: "#1777FF" }}>
-            <Link href="/auth/signup">
-              Register Now
+            <Input.Password
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              placeholder="Password"
+            />
+          </Form.Item>
+          <Form.Item style={{ marginBottom: "10px", color: "#1777FF" }}>
+            <Link
+              className="login-form-right-align"
+              style={{ fontSize: 13 }}
+              href="/auth/reset_password"
+            >
+              Forgot password?
             </Link>
-          </span>
-        </Form.Item>
-        <Form.Item>
-          <Spin spinning={loading} />
-        </Form.Item>
-      </Form>
+          </Form.Item>
+          <Form.Item style={{ marginBottom: "15px" }}>
+            <Form.Item name="remember" valuePropName="checked" noStyle>
+              <Checkbox className="login-form-left-align">Remember me</Checkbox>
+            </Form.Item>
+          </Form.Item>
+          <Form.Item style={{ marginBottom: "10px", fontSize: 13 }}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="login-form-button"
+            >
+              Log in
+            </Button>
+          </Form.Item>
+          <Form.Item style={{ float: "left", marginBottom: 0 }}>
+            New to A Bank?{" "}
+            <span style={{ color: "#1777FF" }}>
+              <Link href="/auth/signup">Register Now</Link>
+            </span>
+          </Form.Item>
+          <Form.Item>
+            <Spin spinning={loading} />
+          </Form.Item>
+        </Form>
       </center>
     </>
   );

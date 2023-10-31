@@ -189,9 +189,8 @@ const SignUpForm = () => {
                   },
                 ]}
               >
-                <Input
+                <Input.Password
                   prefix={<LockOutlined className="site-form-item-icon" />}
-                  type="password"
                   placeholder="Password"
                 />
               </Form.Item>
@@ -204,9 +203,8 @@ const SignUpForm = () => {
                   },
                 ]}
               >
-                <Input
+                <Input.Password
                   prefix={<LockOutlined className="site-form-item-icon" />}
-                  type="password"
                   placeholder="Confirm Password"
                 />
               </Form.Item>
@@ -235,7 +233,10 @@ const SignUpForm = () => {
                   ]}
                   label="Date of Birth"
                 >
-                  <DatePicker onChange={onDatePickerChange} format="YYYY-MM-DD" />
+                  <DatePicker
+                    onChange={onDatePickerChange}
+                    format="YYYY-MM-DD"
+                  />
                 </Form.Item>
               ) : null}
               <Form.Item
