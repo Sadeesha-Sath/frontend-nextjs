@@ -37,29 +37,12 @@ const menuItemsCustomer = [
 const menuItemsEmployee = [
   getItem("Dashboard", "/home/dashboard", <HomeOutlined />, null),
   getItem("All Accounts", "/home/accounts", <CiWallet />, null),
-  getItem("Transfer Funds", "/home/transferFunds", <FcMoneyTransfer />, null),
-  getItem("All Fixed Deposits", "/home/fixed-deposits", <GiPiggyBank />, null),
-  getItem("Users", "/home/users", <GoPerson />),
-  getItem("Customers", "/home/customers", <BsPeople />),
-  getItem("Employees", "/home/employees", <BsFilePerson />),
-  getItem("Loan Management", "loans", <BankOutlined />, [
-    getItem("All Loans", "/home/loans", null, null),
-    getItem("Active Loans", "/home/loans/activeLoans", null, null),
-    getItem(
-      "Request Offline Loan",
-      "/home/loans/loanApplications/new",
-      null,
-      null
-    ),
-    getItem("Loan Installments", "/home/loans/installments", null, null),
-  ]),
-];
-
-const menuItemsBManager = [
-  getItem("Dashboard", "/home/dashboard", <HomeOutlined />, null),
-  getItem("All Accounts", "/home/accounts", <CiWallet />, null),
-  getItem("Transfer Funds", "/home/transferFunds", <FcMoneyTransfer />, null),
-  getItem("All Transactions", "/home/transactions", <BsArrowLeftRight />, null),
+  getItem(
+    "Transfer Funds",
+    "/home/transactions/new",
+    <FcMoneyTransfer />,
+    null
+  ),
   getItem("All Fixed Deposits", "/home/fixed-deposits", <GiPiggyBank />, null),
   getItem("Users", "/home/users", <GoPerson />),
   getItem("Customers", "/home/customers", <BsPeople />),
