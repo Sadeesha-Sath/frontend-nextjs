@@ -131,6 +131,7 @@ const getBranchDetailsMinimal = async () => {
   const response = await fetchJson(`branches?${queryParams}`, {
     method: "GET",
   });
+  console.log(response);
   return response;
 };
 
@@ -155,6 +156,41 @@ const getEmployees = async () => {
   return response;
 };
 
+const getFD = async () => {
+  const response = await fetchJson("fixed-deposits", {
+    method: "GET",
+  });
+  return response;
+};
+
+const getMyFD = async () => {
+  const response = await fetchJson("fixed-deposits/my", {
+    method: "GET",
+  });
+  return response;
+};
+
+const getLoans = async () => {
+  const response = await fetchJson("loans", {
+    method: "GET",
+  });
+  return response;
+};
+
+const getActiveLoans = async () => {
+  const response = await fetchJson("loans/active", {
+    method: "GET",
+  });
+  return response;
+};
+
+const getBranches = async () => {
+  const response = await fetchJson("branches", {
+    method: "GET",
+  });
+  return response;
+};
+
 export {
   loginByEmail,
   loginByUsername,
@@ -169,4 +205,9 @@ export {
   getCustomers,
   getUsers,
   getEmployees,
+  getFD,
+  getMyFD,
+  getLoans,
+  getActiveLoans,
+  getBranches,
 };

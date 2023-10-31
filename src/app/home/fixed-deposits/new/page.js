@@ -38,7 +38,7 @@ const account_fetch = async () => {
 
 const AddFixedDeposit = () => {
   const [account, setAccount] = useState(null);
-  const [accountList, setAccountList] = useState([]);
+  const [accountList, setAccountList] = useState(null);
   const [selectedPeriod, setSelectedPeriod] = useState(null);
   const [interestRates, setInterestRates] = useState({});
   const [interestRate, setInterestRate] = useState(null);

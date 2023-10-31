@@ -1,6 +1,6 @@
 "use client";
 import CustomTable from "@/components/customTable";
-import { Spin, Typography } from "antd";
+import { Spin, Table, Typography } from "antd";
 import {
   getAllAccounts,
   getBranchDetailsMinimal,
@@ -58,7 +58,6 @@ const AllAccounts = () => {
         _.isEqual
       ),
       filterMode: "tree",
-      filterSearch: true,
       // onFilter: (value, record) => record.name.includes(value),
     },
     {
