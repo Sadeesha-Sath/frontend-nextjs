@@ -58,7 +58,7 @@ const AllAccounts = () => {
         _.isEqual
       ),
       filterMode: "tree",
-      onFilter: (value, record) => record.name.includes(value),
+      // onFilter: (value, record) => record.name.includes(value),
     },
     {
       title: "Account Type",
