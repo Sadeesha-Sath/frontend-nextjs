@@ -89,8 +89,6 @@ const checkNIC = async (data) => {
   return response;
 };
 
-
-
 const addEmployee = async (data) => {
   const response = await fetchJson("employees/new", {
     method: "POST",
@@ -194,17 +192,15 @@ const getActiveLoans = async () => {
   return response;
 };
 
-const getLoanInterests = async () => {
-  const response = await fetchJson("loans/interests", {
-    method: "GET",
-  });
-  console.log(response.data);
-  return response.data;
-};
-
-
 const getBranches = async () => {
   const response = await fetchJson("branches", {
+    method: "GET",
+  });
+  return response;
+};
+
+const getAllTransactions = async () => {
+  const response = await fetchJson("transactions", {
     method: "GET",
   });
   return response;
@@ -229,6 +225,6 @@ export {
   getLoans,
   getActiveLoans,
   getBranches,
-  checkNIC, 
-  getLoanInterests
+  checkNIC,
+  getAllTransactions,
 };

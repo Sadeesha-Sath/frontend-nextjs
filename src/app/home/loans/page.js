@@ -6,7 +6,7 @@ const { useState, useEffect } = require("react");
 
 const { Title } = Typography;
 
-const AllCustomers = () => {
+const AllLoans = () => {
   const [data, setData] = useState(null);
   const fetchData = async () => {
     const res = await getLoans();
@@ -85,4 +85,4 @@ const AllCustomers = () => {
   );
 };
 
-export default AllCustomers;
+export default AllLoans;

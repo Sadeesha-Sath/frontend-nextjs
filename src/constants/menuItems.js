@@ -17,12 +17,7 @@ const getItem = (label, key, icon, children, type) => ({
 const menuItemsCustomer = [
   getItem("Dashboard", "/home/dashboard", <HomeOutlined />, null),
   getItem("My Accounts", "/home/accounts", <CiWallet />, null),
-  getItem(
-    "Transfer Funds",
-    "/home/transactions/new",
-    <FcMoneyTransfer />,
-    null
-  ),
+  getItem("Transfer Funds", "/home/transferFunds", <FcMoneyTransfer />, null),
   getItem("All Transactions", "/home/transactions", <BsArrowLeftRight />, null),
   getItem("All Fixed Deposits", "/home/fixed-deposits", <GiPiggyBank />, null),
   getItem("Loans", "loans", <BankOutlined />, [
@@ -47,13 +42,7 @@ const menuItemsCustomer = [
 const menuItemsEmployee = [
   getItem("Dashboard", "/home/dashboard", <HomeOutlined />, null),
   getItem("All Accounts", "/home/accounts", <CiWallet />, null),
-  getItem("Create Account", "/home/savingsaccount", <CiWallet />, null),
-  getItem(
-    "Transfer Funds",
-    "/home/transactions/new",
-    <FcMoneyTransfer />,
-    null
-  ),
+  getItem("Transfer Funds", "/home/transferFunds", <FcMoneyTransfer />, null),
   getItem("All Fixed Deposits", "/home/fixed-deposits", <GiPiggyBank />, null),
   getItem("Users", "/home/users", <GoPerson />),
   getItem("Customers", "/home/customers", <BsPeople />),
@@ -85,12 +74,7 @@ const menuItemsEmployee = [
 const menuItemsBManager = [
   getItem("Dashboard", "/home/dashboard", <HomeOutlined />, null),
   getItem("All Accounts", "/home/accounts", <CiWallet />, null),
-  getItem(
-    "Transfer Funds",
-    "/home/transactions/new",
-    <FcMoneyTransfer />,
-    null
-  ),
+  getItem("Transfer Funds", "/home/transferFunds", <FcMoneyTransfer />, null),
   getItem("All Transactions", "/home/transactions", <BsArrowLeftRight />, null),
   getItem("All Fixed Deposits", "/home/fixed-deposits", <GiPiggyBank />, null),
   getItem("Users", "/home/users", <GoPerson />),
@@ -130,12 +114,7 @@ const menuItemsBManager = [
 const menuItemsAdmin = [
   getItem("Dashboard", "/home/dashboard", <HomeOutlined />, null),
   getItem("All Accounts", "/home/accounts", <CiWallet />, null),
-  getItem(
-    "Transfer Funds",
-    "/home/transactions/new",
-    <FcMoneyTransfer />,
-    null
-  ),
+  getItem("Transfer Funds", "/home/transferFunds", <FcMoneyTransfer />, null),
   getItem("All Transactions", "/home/transactions", <BsArrowLeftRight />, null),
   getItem("All Fixed Deposits", "/home/fixed-deposits", <GiPiggyBank />, null),
   getItem("Branch Management", "/home/branch", <BankOutlined />),
