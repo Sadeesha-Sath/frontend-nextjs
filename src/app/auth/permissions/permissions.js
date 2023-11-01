@@ -1,7 +1,7 @@
 const { useUserStore } = require("@/store/store");
 
 const permissions = {
-  admin: [],
+  admin: ["SET_BRANCH_MANAGER"],
   b_manager: ["VERITY_LOAN_APPLICATIONS"],
   employee: [],
   customer: [],

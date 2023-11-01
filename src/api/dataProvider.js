@@ -112,6 +112,13 @@ const getAllAccounts = async (data) => {
   return response;
 };
 
+const getAccountBasic = async (data) => {
+  const response = await fetchJson("accounts/basic", {
+    method: "GET",
+  });
+  return response;
+};
+
 const getMyAccounts = async (data) => {
   console.log(data);
   const queryParams = stringify(data);
@@ -242,6 +249,13 @@ const rejectLoanApplication = async (id) => {
   return response;
 };
 
+const getFDInterest = async (id) => {
+  const response = await fetchJson("interest/fd", {
+    method: "GET",
+  });
+  return response;
+};
+
 export {
   loginByEmail,
   loginByUsername,
@@ -268,4 +282,6 @@ export {
   addTransaction,
   approveLoanApplication,
   rejectLoanApplication,
+  getAccountBasic,
+  getFDInterest,
 };

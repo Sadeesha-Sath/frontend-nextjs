@@ -2,12 +2,12 @@
 import React, { useEffect, useState } from "react";
 import { Select, Input, Form, Button, Table } from "antd";
 import "./style.css";
+import { getBranchDetailsMinimal } from "@/api/dataProvider";
 
 const branch_fetch = async () => {
   try {
-    const response = await fetch("http://localhost:8080/report/branches");
-    const json = await response.json();
-    const branches = json[0].map((item) => ({
+    const response = await getBranchDetailsMinimal();
+    const branches = response.map((item) => ({
       value: item.BranchID,
       label: item.BranchName,
     }));
