@@ -1,10 +1,12 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 const { getEmployees } = require("@/api/dataProvider");
-const { Table, Spin, Typography } = require("antd");
+const { Table, Spin, Typography, Flex, Col, Button } = require("antd");
 const { useState, useEffect } = require("react");
 
-const {Title} = Typography;
+const { Title } = Typography;
 
 const AllEmployees = () => {
   const [data, setData] = useState(null);
@@ -67,16 +69,34 @@ const AllEmployees = () => {
       key: "UserID",
     },
   ];
+  const router = useRouter();
   return (
     <>
-      <Title level={2} key={"Title"}>
-        Employees
-      </Title>
-      {data === null ? (
-        <Spin />
-      ) : (
-        <Table columns={columns} dataSource={data} scroll={{ x: "max-content"}} />
-      )}
+      <Flex gap="middle" vertical>
+        <Title level={2} key={"Title"}>
+          Employees
+        </Title>
+        <Col span={6}>
+          <Button
+            type="primary"
+            onClick={(e) => {
+              router.push("/home/employees/new");
+            }}
+          >
+            Create New Employee
+          </Button>
+        </Col>
+        {data === null ? (
+          <Spin />
+        ) : (
+          <Table
+            columns={columns}
+            dataSource={data}
+            rowKey={(record) => record.EmployeeID}
+            scroll={{ x: "max-content" }}
+          />
+        )}
+      </Flex>
     </>
   );
 };

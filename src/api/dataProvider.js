@@ -94,10 +94,6 @@ const addEmployee = async (data) => {
     method: "POST",
     body: data,
   });
-  if (response.status === 200) {
-    console.log(response);
-    return response.data;
-  }
   return response;
 };
 
@@ -206,6 +202,30 @@ const getAllTransactions = async () => {
   return response;
 };
 
+const getAllLoanApplications = async (branchID) => {
+  const queryParams = stringify({ branchID });
+  const response = await fetchJson(`loanApplications/?${queryParams}`, {
+    method: "GET",
+  });
+  return response;
+};
+
+const getPendingLoanApplications = async (branchID) => {
+  const queryParams = stringify({ branchID });
+  const response = await fetchJson(`loanApplications/pending/?${queryParams}`, {
+    method: "GET",
+  });
+  return response;
+};
+
+const getAllLoanInstallments = async (branchID) => {
+  const queryParams = stringify({ branchID });
+  const response = await fetchJson(`installments/?${queryParams}`, {
+    method: "GET",
+  });
+  return response;
+};
+
 export {
   loginByEmail,
   loginByUsername,
@@ -227,4 +247,7 @@ export {
   getBranches,
   checkNIC,
   getAllTransactions,
+  getAllLoanApplications,
+  getAllLoanInstallments,
+  getPendingLoanApplications,
 };

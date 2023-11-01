@@ -31,7 +31,6 @@ const account_fetch = async (data) => {
 //need to be continued
 
 const FundTransfer = () => {
-  const [account, setAccount] = useState(null);
   const [accountList, setAccountList] = useState([]);
   const [trnType, setTrnType] = useState("atm");
   const trnTypes = [
@@ -65,9 +64,7 @@ const FundTransfer = () => {
           style={{
             backgroundColor: "#F5F7F8",
             maxWidth: "500px",
-            marginBlock: "10px",
-            paddingBlock: "50px",
-            paddingInline: "25px",
+            padding: "50px",
             borderRadius: "10px",
             border: "0.2px solid grey",
           }}
@@ -93,7 +90,6 @@ const FundTransfer = () => {
                   width: 200,
                 }}
                 options={accountList}
-                onChange={(value) => setAccount(value)}
                 placeholder="Enter Payer Account"
                 filterOption={(inputValue, option) =>
                   option.value
@@ -150,7 +146,7 @@ const FundTransfer = () => {
 
           {trnType == "online" && (
             <Form.Item
-              label="Beneficiary Account Number"
+              label="Payee Account Number:"
               style={{
                 marginBottom: 0,
                 color: "#F4CE14",
@@ -169,8 +165,17 @@ const FundTransfer = () => {
                   width: "800px",
                 }}
               >
-                <Input
-                  placeholder="Enter Account Number"
+                <AutoComplete
+                  style={{
+                    width: 200,
+                  }}
+                  options={accountList}
+                  placeholder="Enter Beneficiary Account"
+                  filterOption={(inputValue, option) =>
+                    option.value
+                      .toUpperCase()
+                      .indexOf(inputValue.toUpperCase()) !== -1
+                  }
                   disabled={trnType === "atm"}
                 />
               </Form.Item>
@@ -196,7 +201,7 @@ const FundTransfer = () => {
                 width: "800px",
               }}
             >
-              <Input placeholder="Enter the amount" />
+              <Input style={{ width: 200 }} placeholder="Enter the amount" />
             </Form.Item>
           </Form.Item>
           <Form.Item label="Description">
@@ -211,6 +216,7 @@ const FundTransfer = () => {
               ]}
             >
               <Input.TextArea
+                style={{ width: 200 }}
                 placeholder="Enter Description of the transfer"
                 autoSize
               />

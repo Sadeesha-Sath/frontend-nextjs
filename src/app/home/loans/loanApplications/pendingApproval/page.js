@@ -1,7 +1,7 @@
 "use client";
 
 const {
-  getAllLoanInstallments,
+  getPendingLoanApplications,
   getBranchDetailsMinimal,
 } = require("@/api/dataProvider");
 const { Table, Spin, Typography, Form, Select, Button, Flex } = require("antd");
@@ -9,14 +9,14 @@ const { useState, useEffect } = require("react");
 
 const { Title } = Typography;
 
-const AllLoanInstallments = () => {
+const PendingLoanApplications = () => {
   const [data, setData] = useState(null);
   const [branch, setBranch] = useState("ALL");
   const [shouldRender, setShouldRender] = useState(false);
   const [branchesData, setBranchesData] = useState(null);
   const fetchData = async () => {
     if (branch !== "ALL") {
-      const res = await getAllLoanInstallments(branch);
+      const res = await getPendingLoanApplications(branch);
       if (res.status === 200) {
         setData(res.data);
       } else {
@@ -24,7 +24,7 @@ const AllLoanInstallments = () => {
         setShouldRender(false);
       }
     } else {
-      const res = await getAllLoanInstallments();
+      const res = await getPendingLoanApplications();
       if (res.status === 200) {
         setData(res.data);
       } else {
@@ -46,34 +46,23 @@ const AllLoanInstallments = () => {
   }, []);
   const columns = [
     {
-      title: "Loan ID",
-      dataIndex: "LoanID",
-      key: "LoanID",
+      title: "Loan Application ID",
+      dataIndex: "LoanApplicationID",
+      key: "LoanApplicationID",
+      render: (text) => (
+        <a href={`/home/loans/loanApplications/${text}`}>{text}</a>
+      ),
     },
     {
-      title: "Due Date",
-      dataIndex: "DueDate",
-      key: "DueDate",
+      title: "Is Online",
+      dataIndex: "IsOnline",
+      key: "IsOnline",
+      render: (text) => (text ? "Yes" : "No"),
     },
     {
-      title: "Status",
-      dataIndex: "Status",
-      key: "Status",
-    },
-    {
-      title: "Payment Date",
-      dataIndex: "PaymentDate",
-      key: "PaymentDate",
-    },
-    {
-      title: "Installment",
-      dataIndex: "Installment",
-      key: "Installment",
-    },
-    {
-      title: "Branch ID",
-      dataIndex: "BranchID",
-      key: "BranchID",
+      title: "Fixed Deposit ID",
+      dataIndex: "FixedId",
+      key: "FixedId",
     },
     {
       title: "Customer ID",
@@ -81,16 +70,56 @@ const AllLoanInstallments = () => {
       key: "CustomerID",
     },
     {
-      title: "User ID",
-      dataIndex: "UserID",
-      key: "UserID",
+      title: "Branch ID",
+      dataIndex: "BranchID",
+      key: "BranchID",
+    },
+    {
+      title: "Duration",
+      dataIndex: "Duration",
+      key: "Duration",
+    },
+    {
+      title: "Status",
+      dataIndex: "Status",
+      key: "Status",
+    },
+    {
+      title: "Type",
+      dataIndex: "Type",
+      key: "Type",
+    },
+    {
+      title: "Amount",
+      dataIndex: "Amount",
+      key: "Amount",
+    },
+    {
+      title: "Created Time Stamp",
+      dataIndex: "CreatedTimeStamp",
+      key: "CreatedTimeStamp",
+    },
+    {
+      title: "Created By",
+      dataIndex: "CreatedBy",
+      key: "CreatedBy",
+    },
+    {
+      title: "Checked Date",
+      dataIndex: "CheckedDate",
+      key: "CheckedDate",
+    },
+    {
+      title: "Checked By",
+      dataIndex: "CheckedBy",
+      key: "CheckedBy",
     },
   ];
   return (
     <>
       <Flex gap="middle" vertical>
         <Title level={2} key={"Title"}>
-          All Loan Installments
+          Pending Loan Applications
         </Title>
         <Form
           layout="inline"
@@ -129,6 +158,7 @@ const AllLoanInstallments = () => {
             <Table
               columns={columns}
               dataSource={data}
+              rowKey={(record) => record.LoanApplicationID}
               scroll={{ x: "max-content" }}
             />
           )
@@ -138,4 +168,4 @@ const AllLoanInstallments = () => {
   );
 };
 
-export default AllLoanInstallments;
+export default PendingLoanApplications;
