@@ -1,0 +1,50 @@
+.centered-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 30px;
+  height: 100vh; /* 100% of the viewport height */
+}
+
+.select-container{
+  margin:20px
+}
+.generate-button {
+  margin-top:20px;
+
+}
+.title-container{
+  text-align: center;
+}
+
+.input-container{
+  display: flex;
+  width: 80vw;
+  justify-content: center;
+}
+
+.table-container{
+  display: flex;
+  width: 50vw;
+  height: 75vh;
+  justify-content: center;
+  overflow: auto;
+}
+
+@media (max-width: 768px) {
+  .centered-container {
+    margin-top: 10px; /* Adjust the margin for smaller screens */
+  }
+
+  .select-container {
+    margin: 10px; /* Adjust the margin for smaller screens */
+  }
+
+  .generate-button {
+    margin-top: 10px; /* Adjust the margin for smaller screens */
+  }
+
+ 
+}
+
