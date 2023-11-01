@@ -382,7 +382,6 @@ const account_fetch = async () => {
 
 const LoanApplication = () => {
   const [form] = Form.useForm();
-
   const [showRate, setShowRate] = useState(null);
   const [loanType, setLoanType] = useState(null);
   const [interestData, setInterestData] = useState([]);
@@ -467,7 +466,6 @@ const LoanApplication = () => {
             Loan Application
           </Title>
         </center>
-
         <Form.Item
           label="NIC"
           name="nic"
