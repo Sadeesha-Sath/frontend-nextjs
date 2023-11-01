@@ -29,7 +29,6 @@
 // import { checkNIC, signup, getLoanInterests} from "@/api/dataProvider";
 // import { useRouter } from "next/navigation";
 
-
 // const { Title, Link } = Typography;
 
 // const OffLoanForm = () => {
@@ -48,9 +47,6 @@
 //   const [currentDurations, setCurrentDurations] = useState([]);
 //   const loanTypes = ['business', 'personal']
 
-
-
-
 //   useEffect(() => {
 //     getLoanInterests()
 //       .then((rates) => {
@@ -60,8 +56,6 @@
 //         console.error(error);
 //       });
 //   }, []);
-
- 
 
 //   const isValidNIC = async (e) => {
 //     console.log("Received NIC: " + nic);
@@ -83,12 +77,10 @@
 //     }
 //   };
 
-
 //   const [date, setDate] = useState(null);
 //   const onDatePickerChange = (date, dateString) => {
 //     setDate(dateString);
 //   };
-
 
 //   const handleOnFinish = async (values) => {
 //     console.log("Received values of form: ", values);
@@ -252,7 +244,6 @@
 //                   ))}
 //                 </Select>
 //               </Form.Item>
-      
 
 //               <Form.Item
 //             name="period"
@@ -279,7 +270,6 @@
 //               ))}
 //             </Select>
 //           </Form.Item>
-            
 
 //               <Form.Item
 //                 name="phone"
@@ -346,23 +336,10 @@
 
 // export default OffLoanForm;
 
-
-
-
-
-
-
 "use client";
 import React, { useEffect, useState } from "react";
-import { Button, Form, Input, Select, Typography, Col, Row } from "antd";
-import {
-  CheckCircleTwoTone,
-  CloseCircleTwoTone,
-} from "@ant-design/icons";
-
+import { Button, Form, Input, Select, Typography } from "antd";
 const { getLoanInterests } = require("@/api/dataProvider");
-
-import { checkNIC} from "@/api/dataProvider";
 const { Option } = Select;
 const { Title, Link } = Typography;
 const onFinish = (values) => {
@@ -385,8 +362,6 @@ const rates_fetch = async () => {
   }
 };
 
-  
-
 const account_fetch = async () => {
   try {
     const response = await fetch("http://localhost:8080/fundtransfer/accounts");
@@ -401,38 +376,33 @@ const account_fetch = async () => {
   }
 };
 
-const LoanApplication = () => {
-  const [form] = Form.useForm();
-  
+const AddFixedDeposit = () => {
+  const [selectedPeriod, setSelectedPeriod] = useState(null);
+  const [interestRates, setInterestRates] = useState({});
+  const [interestRate, setInterestRate] = useState(null);
   const [showRate, setShowRate] = useState(null);
   const [loanType, setLoanType] = useState(null);
   const [interestData, setInterestData] = useState([]);
   const [interestInfo, setInterestInfo] = useState({});
   const [period, setPeriod] = useState([]);
   const [showValues, setShowValues] = useState(false);
-  const [rate, setRate] = useState(null); 
-  const [validUser, setValidUser] = useState(null);
- 
-
-  const loanTypes = [
-    "Business", "Personal"];
+  const [rate, setRate] = useState(null);
+  let rates_json = {};
+  const loanTypes = ["Business", "Personal"];
 
   useEffect(() => {
-    rates_fetch()
-      .then((rates) => {
-        let rates_json ={}
-        setInterestData({business: rates.business, personal: rates.personal});
-        Object.values(rates).forEach((element) => {
-          let temp = {}
-          for (const item of element) {
-            temp[item.Duration] = item.InterestRate;
-          }
-          rates_json[element[0].Type.toLowerCase()] = temp;
-         
-        })
-        setInterestInfo(rates_json);
-
+    rates_fetch().then((rates) => {
+      let rates_json = {};
+      setInterestData({ business: rates.business, personal: rates.personal });
+      Object.values(rates).forEach((element) => {
+        let temp = {};
+        for (const item of element) {
+          temp[item.Duration] = item.InterestRate;
+        }
+        rates_json[element[0].Type.toLowerCase()] = temp;
       });
+      setInterestInfo(rates_json);
+    });
   }, []);
 
   useEffect(() => {
@@ -446,30 +416,9 @@ const LoanApplication = () => {
       });
   }, []);
 
-  const isValidNIC = async (e) => {
-    console.log("Received NIC: " + nic);
-    if (nic) {
-      try {
-        const res = await checkNIC({ nic });
-        if (res.status === 200) {
-          if (res.data.available) {
-            setValidUser(true);
-          } else {
-            setValidUser(false);
-          }
-        } else {
-          console.log(res);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
-  const nic = Form.useWatch("nic", form);
   return (
     <div className="form-container">
       <Form
-        form={form}
         name="loanApplication-form"
         onFinish={onFinish}
         labelCol={{
@@ -493,54 +442,6 @@ const LoanApplication = () => {
             Loan Application
           </Title>
         </center>
-        
-        <Form.Item
-          label="NIC"
-          name="nic"
-          style={{
-            marginBottom: 0,
-          }}
-        >
-          <Form.Item
-            name="nic"
-            rules={[
-              {
-                required: true,
-                message: "NIC is required to proceed",
-              },
-            ]}
-            style={{
-              display: "flex",
-              width: "800px",
-            }}
-          >
-            <Input placeholder="Enter the NIC" />
-            {validUser !== null ? (
-                    validUser ? (
-                      <Col span={2}>
-                        <div style={{ minWidth: "100%" ,}}>
-                          <CheckCircleTwoTone twoToneColor="#2AD24E" />
-                        </div>
-                      </Col>
-                    ) : (
-                      <Col span={2}>
-                        <div style={{ minWidth: "100%" }}>
-                          <CloseCircleTwoTone twoToneColor="#EB2F45" />
-                        </div>
-                      </Col>
-                    )
-                  ) : null}
-
-            <Button
-                      style={{ maxWidth: "100%" }}
-                      className="nic-check"
-                      onClick={isValidNIC}
-                    >
-                      Check
-                    </Button>
-                  
-          </Form.Item>
-        </Form.Item>
 
         <Form.Item label="Loan Type">
           <Form.Item
@@ -562,8 +463,7 @@ const LoanApplication = () => {
                 setRate(interestInfo[value.toLowerCase()][period]);
                 console.log(interestInfo[value.toLowerCase()][period]);
                 setShowRate(false);
-                 }
-            }
+              }}
               value={loanType}
               style={{
                 width: 200,
@@ -579,7 +479,6 @@ const LoanApplication = () => {
           </Form.Item>
         </Form.Item>
 
-
         <Form.Item label="Duration">
           <Form.Item
             name="duration"
@@ -591,38 +490,35 @@ const LoanApplication = () => {
               },
             ]}
           >
-
-
             <Select
               className="select-container"
               onChange={(value) => {
                 setPeriod(value);
                 setRate(interestInfo[loanType][value]);
                 setShowRate(true);
-              }
-            }
+              }}
               value={period}
               style={{
                 width: 200,
               }}
               placeholder="Choose a period"
             >
-              {showValues && interestData[loanType].map((option) => (
-                <Select.Option key={option.Duration} period={option.Duration}>
-                  {`${option.Duration} months`}
-                </Select.Option>
-              ))}
+              {showValues &&
+                interestData[loanType].map((option) => (
+                  <Select.Option key={option.Duration} period={option.Duration}>
+                    {`${option.Duration} months`}
+                  </Select.Option>
+                ))}
             </Select>
           </Form.Item>
         </Form.Item>
 
-    
         {showRate && (
           <Form.Item
             label="Interest Rate"
             style={{ color: "Red", fontWeight: "bold" }}
           >
-            {(rate* 100).toFixed(2)}%
+            {(rate * 100).toFixed(2)}%
           </Form.Item>
         )}
 
@@ -658,4 +554,4 @@ const LoanApplication = () => {
     </div>
   );
 };
-export default LoanApplication;
+export default AddFixedDeposit;
