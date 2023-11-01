@@ -10,7 +10,7 @@ import "./style.css";
 
 const rates_fetch = async () => {
   try {
-    const response = await fetch("http://localhost:8080/interest");
+    const response = await fetch("http://localhost:8080/interest/fd");
     const json = await response.json();
     const rates_json = {};
     json.forEach((element) => {
@@ -24,7 +24,7 @@ const rates_fetch = async () => {
 
 const account_fetch = async () => {
   try {
-    const response = await fetch("http://localhost:8080/fundtransfer/accounts");
+    const response = await fetch("http://localhost:8080/accounts/basic");
     const json = await response.json();
     const accounts = json.map((item) => ({
       value: item.AccountNo,

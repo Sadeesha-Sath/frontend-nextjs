@@ -1,10 +1,12 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 const { getCustomers } = require("@/api/dataProvider");
-const { Table, Spin, Typography } = require("antd");
+const { Table, Spin, Typography, Button, Flex, Col } = require("antd");
 const { useState, useEffect } = require("react");
 
-const {Title} = Typography;
+const { Title } = Typography;
 
 const AllCustomers = () => {
   const [data, setData] = useState(null);
@@ -77,16 +79,34 @@ const AllCustomers = () => {
       key: "UserID",
     },
   ];
+  const router = useRouter();
   return (
     <>
-      <Title level={2} key={"Title"}>
-        Customers
-      </Title>
-      {data === null ? (
-        <Spin />
-      ) : (
-        <Table columns={columns} dataSource={data} scroll={{ x: "max-content"}} />
-      )}
+      <Flex gap="middle" vertical>
+        <Title level={2} key={"Title"}>
+          Customers
+        </Title>
+        <Col span={6}>
+          <Button
+            type="primary"
+            onClick={(e) => {
+              router.push("/home/customers/new");
+            }}
+          >
+            Create New Customer
+          </Button>
+        </Col>
+        {data === null ? (
+          <Spin />
+        ) : (
+          <Table
+            columns={columns}
+            dataSource={data}
+            rowKey={(record) => record.CustomerID}
+            scroll={{ x: "max-content" }}
+          />
+        )}
+      </Flex>
     </>
   );
 };
