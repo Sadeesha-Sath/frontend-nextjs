@@ -1,8 +1,7 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./style.css";
 const { getCustomers } = require("@/api/dataProvider");
-const { useState, useEffect } = require("react");
 
 const SingleCustomer = ({ params }) => {
   const [data, setData] = useState(null);
@@ -28,7 +27,9 @@ const SingleCustomer = ({ params }) => {
     return <p>Loading...</p>;
   }
 
-  const customerData = data.find((customer) => customer.CustomerID === Number(params.customerID));
+  const customerData = data.find(
+    (customer) => customer.CustomerID === Number(params.customerID)
+  );
 
   if (!customerData) {
     return <p>Customer not found</p>;
@@ -36,7 +37,6 @@ const SingleCustomer = ({ params }) => {
 
   return (
     <div className="single-customer">
-      
       <div className="customer-data">
         <label>CustomerID:</label>
         <input type="text" value={customerData.CustomerID} readOnly />
