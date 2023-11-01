@@ -338,8 +338,12 @@
 
 "use client";
 import React, { useEffect, useState } from "react";
-import { Button, Form, Input, Select, Typography } from "antd";
+import { Button, Form, Input, Select, Typography, Col, Row } from "antd";
+import { CheckCircleTwoTone, CloseCircleTwoTone } from "@ant-design/icons";
+
 const { getLoanInterests } = require("@/api/dataProvider");
+
+import { checkNIC } from "@/api/dataProvider";
 const { Option } = Select;
 const { Title, Link } = Typography;
 const onFinish = (values) => {
@@ -376,10 +380,9 @@ const account_fetch = async () => {
   }
 };
 
-const AddFixedDeposit = () => {
-  const [selectedPeriod, setSelectedPeriod] = useState(null);
-  const [interestRates, setInterestRates] = useState({});
-  const [interestRate, setInterestRate] = useState(null);
+const LoanApplication = () => {
+  const [form] = Form.useForm();
+
   const [showRate, setShowRate] = useState(null);
   const [loanType, setLoanType] = useState(null);
   const [interestData, setInterestData] = useState([]);
@@ -387,7 +390,8 @@ const AddFixedDeposit = () => {
   const [period, setPeriod] = useState([]);
   const [showValues, setShowValues] = useState(false);
   const [rate, setRate] = useState(null);
-  let rates_json = {};
+  const [validUser, setValidUser] = useState(null);
+
   const loanTypes = ["Business", "Personal"];
 
   useEffect(() => {
@@ -416,9 +420,30 @@ const AddFixedDeposit = () => {
       });
   }, []);
 
+  const isValidNIC = async (e) => {
+    console.log("Received NIC: " + nic);
+    if (nic) {
+      try {
+        const res = await checkNIC({ nic });
+        if (res.status === 200) {
+          if (res.data.available) {
+            setValidUser(true);
+          } else {
+            setValidUser(false);
+          }
+        } else {
+          console.log(res);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+  const nic = Form.useWatch("nic", form);
   return (
     <div className="form-container">
       <Form
+        form={form}
         name="loanApplication-form"
         onFinish={onFinish}
         labelCol={{
@@ -442,6 +467,53 @@ const AddFixedDeposit = () => {
             Loan Application
           </Title>
         </center>
+
+        <Form.Item
+          label="NIC"
+          name="nic"
+          style={{
+            marginBottom: 0,
+          }}
+        >
+          <Form.Item
+            name="nic"
+            rules={[
+              {
+                required: true,
+                message: "NIC is required to proceed",
+              },
+            ]}
+            style={{
+              display: "flex",
+              width: "800px",
+            }}
+          >
+            <Input placeholder="Enter the NIC" />
+            {validUser !== null ? (
+              validUser ? (
+                <Col span={2}>
+                  <div style={{ minWidth: "100%" }}>
+                    <CheckCircleTwoTone twoToneColor="#2AD24E" />
+                  </div>
+                </Col>
+              ) : (
+                <Col span={2}>
+                  <div style={{ minWidth: "100%" }}>
+                    <CloseCircleTwoTone twoToneColor="#EB2F45" />
+                  </div>
+                </Col>
+              )
+            ) : null}
+
+            <Button
+              style={{ maxWidth: "100%" }}
+              className="nic-check"
+              onClick={isValidNIC}
+            >
+              Check
+            </Button>
+          </Form.Item>
+        </Form.Item>
 
         <Form.Item label="Loan Type">
           <Form.Item
@@ -554,4 +626,4 @@ const AddFixedDeposit = () => {
     </div>
   );
 };
-export default AddFixedDeposit;
+export default LoanApplication;

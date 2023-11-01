@@ -195,6 +195,14 @@ const getActiveLoans = async () => {
   return response;
 };
 
+const getLoanInterests = async () => {
+  const response = await fetchJson("loans/interests", {
+    method: "GET",
+  });
+  console.log(response.data);
+  return response.data;
+};
+
 const getBranches = async () => {
   const response = await fetchJson("branches", {
     method: "GET",
@@ -293,4 +301,5 @@ export {
   rejectLoanApplication,
   getAccountBasic,
   getFDInterest,
+  checkNIC,
 };
