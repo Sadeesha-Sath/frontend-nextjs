@@ -291,7 +291,6 @@ export {
   getLoans,
   getActiveLoans,
   getBranches,
-  checkNIC,
   getAllTransactions,
   getAllLoanApplications,
   getAllLoanInstallments,
