@@ -5,6 +5,8 @@
     border: 3px solid #4ccbd4;
     border-radius: 5px;
     background-color: #b0d8db;
+    
+
   }
   
   .single-customer h1 {
@@ -28,8 +30,9 @@
   .single-customer .customer-data input {
     width: 300px;
     padding: 5px;
-    border: 1px solid #ccc;
+    border: 2px solid #ccc;
     border-radius: 5px;
+    
   }
   
   .single-customer .customer-data input:focus {
