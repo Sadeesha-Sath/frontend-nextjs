@@ -1,22 +1,35 @@
 "use client";
 
+import ToastMessage from "@/components/Toast";
+import React from "react";
 const {
-  getAllLoanApplications,
+  getPendingLoanApplications,
   getBranchDetailsMinimal,
+  approveLoanApplication,
+  rejectLoanApplication,
 } = require("@/api/dataProvider");
-const { Table, Spin, Typography, Form, Select, Button, Flex } = require("antd");
+const {
+  Table,
+  Spin,
+  Typography,
+  Form,
+  Select,
+  Button,
+  Flex,
+  Space,
+} = require("antd");
 const { useState, useEffect } = require("react");
 
-const { Title } = Typography;
+const { Title, Link } = Typography;
 
-const AllLoanApplications = () => {
+const PendingLoanApplications = () => {
   const [data, setData] = useState(null);
   const [branch, setBranch] = useState("ALL");
   const [shouldRender, setShouldRender] = useState(false);
   const [branchesData, setBranchesData] = useState(null);
   const fetchData = async () => {
     if (branch !== "ALL") {
-      const res = await getAllLoanApplications(branch);
+      const res = await getPendingLoanApplications(branch);
       if (res.status === 200) {
         setData(res.data);
       } else {
@@ -24,7 +37,7 @@ const AllLoanApplications = () => {
         setShouldRender(false);
       }
     } else {
-      const res = await getAllLoanApplications();
+      const res = await getPendingLoanApplications();
       if (res.status === 200) {
         setData(res.data);
       } else {
@@ -39,6 +52,33 @@ const AllLoanApplications = () => {
       setBranchesData([...res.data, { BranchID: "ALL", BranchName: "ALL" }]);
     } else {
       console.log(res.data);
+    }
+  };
+  const notify = React.useCallback((type, message) => {
+    ToastMessage({ type, message });
+  }, []);
+
+  const dismiss = React.useCallback(() => {
+    ToastMessage.dismiss();
+  }, []);
+  const approve = async (id) => {
+    const response = await approveLoanApplication(id);
+    if (response.status === 200) {
+      notify("success", `Loan Application ${id} Approved`);
+      console.log("success");
+    } else {
+      notify("error", "Loan Approval Failed!");
+      console.log("Not Successful");
+    }
+  };
+  const reject = async (id) => {
+    const response = await rejectLoanApplication(id);
+    if (response.status === 200) {
+      notify("success", `Loan Application ${id} Rejected`);
+      console.log("success");
+    } else {
+      notify("error", "Loan Rejection Failed!");
+      console.log("Not Successful");
     }
   };
   useEffect(() => {
@@ -114,12 +154,36 @@ const AllLoanApplications = () => {
       dataIndex: "CheckedBy",
       key: "CheckedBy",
     },
+    {
+      title: "Action",
+      key: "action",
+      render: (_, record) => (
+        <Space size="middle">
+          <Button
+            type="primary"
+            onClick={() => {
+              approve(record.LoanApplicationID);
+            }}
+          >
+            Approve
+          </Button>
+          <Button
+            danger
+            onClick={() => {
+              reject(record.LoanApplicationID);
+            }}
+          >
+            Reject
+          </Button>
+        </Space>
+      ),
+    },
   ];
   return (
     <>
       <Flex gap="middle" vertical>
         <Title level={2} key={"Title"}>
-          All Loan Applications
+          Pending Loan Applications
         </Title>
         <Form
           layout="inline"
@@ -168,4 +232,4 @@ const AllLoanApplications = () => {
   );
 };
 
-export default AllLoanApplications;
+export default PendingLoanApplications;

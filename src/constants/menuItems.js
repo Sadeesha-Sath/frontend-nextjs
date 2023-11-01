@@ -17,12 +17,7 @@ const getItem = (label, key, icon, children, type) => ({
 const menuItemsCustomer = [
   getItem("Dashboard", "/home/dashboard", <HomeOutlined />, null),
   getItem("My Accounts", "/home/accounts", <CiWallet />, null),
-  getItem(
-    "Transfer Funds",
-    "/home/transferFunds",
-    <FcMoneyTransfer />,
-    null
-  ),
+  getItem("Transfer Funds", "/home/transferFunds", <FcMoneyTransfer />, null),
   getItem("All Transactions", "/home/transactions", <BsArrowLeftRight />, null),
   getItem("All Fixed Deposits", "/home/fixed-deposits", <GiPiggyBank />, null),
   getItem("Loans", "loans", <BankOutlined />, [
@@ -35,12 +30,7 @@ const menuItemsCustomer = [
       null
     ),
     getItem("My Loan Applications", "/home/loans/loanApplications", null, null),
-    getItem(
-      "My Pending Installments",
-      "/home/loans/installments/pending",
-      null,
-      null
-    ),
+    getItem("My Loan Installments", "/home/loans/installments", null, null),
   ]),
 ];
 
@@ -61,18 +51,7 @@ const menuItemsEmployee = [
       null,
       null
     ),
-    getItem(
-      "All Loan Applications",
-      "/home/loans/loanApplications",
-      null,
-      null
-    ),
-    getItem(
-      "Pending Installements",
-      "/home/loans/installments/pending",
-      null,
-      null
-    ),
+    getItem("Loan Installments", "/home/loans/installments", null, null),
   ]),
 ];
 
@@ -101,17 +80,12 @@ const menuItemsBManager = [
       null
     ),
     getItem(
-      "Pending Installements",
-      "/home/loans/installments/pending",
+      "Pending Loan Applications",
+      "/home/loans/loanApplications/pendingApproval",
       null,
       null
     ),
-    getItem(
-      "Overdue Installments",
-      "/home/loans/installments/overdue",
-      null,
-      null
-    ),
+    getItem("Loan Installments", "/home/loans/installments", null, null),
   ]),
   getItem("Reports", "/home/reports", <TbReportAnalytics />, null),
 ];
@@ -142,17 +116,12 @@ const menuItemsAdmin = [
       null
     ),
     getItem(
-      "Pending Installements",
-      "/home/loans/installments/pending",
+      "Pending Loan Applications",
+      "/home/loans/loanApplications/pendingApproval",
       null,
       null
     ),
-    getItem(
-      "Overdue Installments",
-      "/home/loans/installments/overdue",
-      null,
-      null
-    ),
+    getItem("Loan Installments", "/home/loans/installments", null, null),
   ]),
   getItem("Reports", "/home/reports", <TbReportAnalytics />, null),
 ];

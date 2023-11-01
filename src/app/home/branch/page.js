@@ -21,7 +21,7 @@ const AllBranches = () => {
   }, []);
   const columns = [
     {
-      title: "Brnach ID",
+      title: "Branch ID",
       dataIndex: "BranchID",
       key: "BranchID",
       render: (text) => <a href={`/home/branches/${text}`}>{text}</a>,
@@ -68,6 +68,7 @@ const AllBranches = () => {
         <Table
           columns={columns}
           dataSource={data}
+          rowKey={(record) => record.BranchID}
           scroll={{ x: "max-content" }}
         />
       )}

@@ -86,10 +86,6 @@ const addEmployee = async (data) => {
     method: "POST",
     body: data,
   });
-  if (response.status === 200) {
-    console.log(response);
-    return response.data;
-  }
   return response;
 };
 
@@ -198,6 +194,54 @@ const getAllTransactions = async () => {
   return response;
 };
 
+const getAllLoanApplications = async (branchID) => {
+  const queryParams = stringify({ branchID });
+  const response = await fetchJson(`loanApplications/?${queryParams}`, {
+    method: "GET",
+  });
+  return response;
+};
+
+const getPendingLoanApplications = async (branchID) => {
+  const queryParams = stringify({ branchID });
+  const response = await fetchJson(`loanApplications/pending/?${queryParams}`, {
+    method: "GET",
+  });
+  return response;
+};
+
+const getAllLoanInstallments = async (branchID) => {
+  const queryParams = stringify({ branchID });
+  const response = await fetchJson(`installments/?${queryParams}`, {
+    method: "GET",
+  });
+  return response;
+};
+
+const addTransaction = async (data) => {
+  const response = await fetchJson("transactions/add", {
+    method: "POST",
+    body: data,
+  });
+  return response;
+};
+
+const approveLoanApplication = async (id) => {
+  const response = await fetchJson("loanApplications/approve", {
+    method: "POST",
+    body: { id },
+  });
+  return response;
+};
+
+const rejectLoanApplication = async (id) => {
+  const response = await fetchJson("loanApplications/reject", {
+    method: "POST",
+    body: { id },
+  });
+  return response;
+};
+
 export {
   loginByEmail,
   loginByUsername,
@@ -218,4 +262,10 @@ export {
   getActiveLoans,
   getBranches,
   getAllTransactions,
+  getAllLoanApplications,
+  getAllLoanInstallments,
+  getPendingLoanApplications,
+  addTransaction,
+  approveLoanApplication,
+  rejectLoanApplication,
 };
