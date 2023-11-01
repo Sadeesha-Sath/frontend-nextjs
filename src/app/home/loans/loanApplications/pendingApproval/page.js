@@ -1,13 +1,26 @@
 "use client";
 
+import ToastMessage from "@/components/Toast";
+import React from "react";
 const {
   getPendingLoanApplications,
   getBranchDetailsMinimal,
+  approveLoanApplication,
+  rejectLoanApplication,
 } = require("@/api/dataProvider");
-const { Table, Spin, Typography, Form, Select, Button, Flex } = require("antd");
+const {
+  Table,
+  Spin,
+  Typography,
+  Form,
+  Select,
+  Button,
+  Flex,
+  Space,
+} = require("antd");
 const { useState, useEffect } = require("react");
 
-const { Title } = Typography;
+const { Title, Link } = Typography;
 
 const PendingLoanApplications = () => {
   const [data, setData] = useState(null);
@@ -39,6 +52,33 @@ const PendingLoanApplications = () => {
       setBranchesData([...res.data, { BranchID: "ALL", BranchName: "ALL" }]);
     } else {
       console.log(res.data);
+    }
+  };
+  const notify = React.useCallback((type, message) => {
+    ToastMessage({ type, message });
+  }, []);
+
+  const dismiss = React.useCallback(() => {
+    ToastMessage.dismiss();
+  }, []);
+  const approve = async (id) => {
+    const response = await approveLoanApplication(id);
+    if (response.status === 200) {
+      notify("success", `Loan Application ${id} Approved`);
+      console.log("success");
+    } else {
+      notify("error", "Loan Approval Failed!");
+      console.log("Not Successful");
+    }
+  };
+  const reject = async (id) => {
+    const response = await rejectLoanApplication(id);
+    if (response.status === 200) {
+      notify("success", `Loan Application ${id} Rejected`);
+      console.log("success");
+    } else {
+      notify("error", "Loan Rejection Failed!");
+      console.log("Not Successful");
     }
   };
   useEffect(() => {
@@ -113,6 +153,30 @@ const PendingLoanApplications = () => {
       title: "Checked By",
       dataIndex: "CheckedBy",
       key: "CheckedBy",
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (_, record) => (
+        <Space size="middle">
+          <Button
+            type="primary"
+            onClick={() => {
+              approve(record.LoanApplicationID);
+            }}
+          >
+            Approve
+          </Button>
+          <Button
+            danger
+            onClick={() => {
+              reject(record.LoanApplicationID);
+            }}
+          >
+            Reject
+          </Button>
+        </Space>
+      ),
     },
   ];
   return (

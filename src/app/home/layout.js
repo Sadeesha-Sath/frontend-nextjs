@@ -1,10 +1,17 @@
 "use client";
-import { menuItemsAdmin, menuItemsBManager, menuItemsEmployee,menuItemsCustomer } from "@/constants/menuItems";
+import {
+  menuItemsAdmin,
+  menuItemsBManager,
+  menuItemsEmployee,
+  menuItemsCustomer,
+} from "@/constants/menuItems";
 import { useUserStore } from "@/store/store";
 import { Menu, Layout, Typography, Button, Spin } from "antd";
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect } from "react";
 import checkToken from "../auth/checkToken";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const { Title } = Typography;
 
@@ -114,6 +121,16 @@ const HomeLayout = ({ children }) => {
               }}
             >
               {children}
+              <ToastContainer
+                position="top-right"
+                autoClose={4000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                draggable={false}
+                pauseOnVisibilityChange
+                closeOnClick
+                pauseOnHover
+              />
             </Content>
           </Layout>
         </Layout>
