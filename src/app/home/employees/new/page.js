@@ -32,6 +32,7 @@ import {
 } from "@/api/dataProvider";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import toast from "@/components/Toast";
 
 const { Title, Link } = Typography;
 
@@ -70,6 +71,13 @@ const CreateEmployee = () => {
       console.log(res.data);
     }
   };
+  const notify = React.useCallback((type, message) => {
+    toast({ type, message });
+  }, []);
+
+  const dismiss = React.useCallback(() => {
+    toast.dismiss();
+  }, []);
   useEffect(() => {
     fetchBranches();
   }, []);
@@ -83,8 +91,10 @@ const CreateEmployee = () => {
         // res = await signup(values);
         setLoading(false);
         if (res.status === 200) {
+          notify("success", "Employee Created!");
           router.back();
         } else {
+          notify("error", "Employee Creation Failed!");
           console.log(res);
         }
       } catch (error) {
@@ -252,17 +262,6 @@ const CreateEmployee = () => {
                           </Select.Option>
                         ))}
                     </Select>
-                  </Form.Item>
-                  <Form.Item
-                    name="position"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please a Position",
-                      },
-                    ]}
-                  >
-                    <Input type="text" placeholder="Position" />
                   </Form.Item>
                 </Col>
               </Row>

@@ -1,17 +1,10 @@
 "use client";
-import {
-  getAllAccounts,
-  getBranchDetailsMinimal,
-  getMyAccounts,
-} from "@/api/dataProvider";
-import { useUserStore } from "@/store/store";
+import { addTransaction, getAllAccounts } from "@/api/dataProvider";
 import _ from "lodash";
 import React, { useEffect, useState } from "react";
 import { AutoComplete, Button, Form, Input, Select, Typography } from "antd";
-const { Title, Link } = Typography;
-const onFinish = (values) => {
-  console.log("Received values of form: ", values);
-};
+const { Title } = Typography;
+import toast from "@components/Toast";
 import "./style.css";
 
 //account fetch must be fixed   get my accounts
@@ -37,6 +30,29 @@ const FundTransfer = () => {
     { value: "atm", label: "ATM" },
     { value: "online", label: "Online" },
   ];
+  const notify = React.useCallback((type, message) => {
+    toast({ type, message });
+  }, []);
+
+  const dismiss = React.useCallback(() => {
+    toast.dismiss();
+  }, []);
+
+  const onFinish = async (values) => {
+    console.log("Received values of form: ", values);
+    try {
+      const result = await addTransaction(values);
+      if (result.status === 200) {
+        console.log("Success");
+        notify("success", "Transaction Complete!");
+      } else {
+        console.log("Unsuccessful");
+        notify("error", "Transaction Failed!");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   useEffect(() => {
     account_fetch()

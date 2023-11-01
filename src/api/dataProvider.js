@@ -226,6 +226,30 @@ const getAllLoanInstallments = async (branchID) => {
   return response;
 };
 
+const addTransaction = async (data) => {
+  const response = await fetchJson("transactions/add", {
+    method: "POST",
+    body: data,
+  });
+  return response;
+};
+
+const approveLoanApplication = async (id) => {
+  const response = await fetchJson("loanApplications/approve", {
+    method: "POST",
+    body: { id },
+  });
+  return response;
+};
+
+const rejectLoanApplication = async (id) => {
+  const response = await fetchJson("loanApplications/reject", {
+    method: "POST",
+    body: { id },
+  });
+  return response;
+};
+
 export {
   loginByEmail,
   loginByUsername,
@@ -250,4 +274,7 @@ export {
   getAllLoanApplications,
   getAllLoanInstallments,
   getPendingLoanApplications,
+  addTransaction,
+  approveLoanApplication,
+  rejectLoanApplication,
 };
