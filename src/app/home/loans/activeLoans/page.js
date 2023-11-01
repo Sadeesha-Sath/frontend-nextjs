@@ -1,15 +1,15 @@
 "use client";
 
-const { getLoans } = require("@/api/dataProvider");
+const { getActiveLoans } = require("@/api/dataProvider");
 const { Table, Spin, Typography } = require("antd");
 const { useState, useEffect } = require("react");
 
 const { Title } = Typography;
 
-const AllLoans = () => {
+const ActiveLoans = () => {
   const [data, setData] = useState(null);
   const fetchData = async () => {
-    const res = await getLoans();
+    const res = await getActiveLoans();
     if (res.status === 200) {
       setData(res.data);
     } else {
@@ -85,4 +85,4 @@ const AllLoans = () => {
   );
 };
 
-export default AllLoans;
+export default ActiveLoans;

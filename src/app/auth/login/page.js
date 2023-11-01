@@ -63,7 +63,7 @@ const LoginForm = () => {
           onFinish={onFinish}
         >
           <Form.Item
-            name="username/email"
+            name="username_email"
             rules={[
               {
                 required: true,
@@ -86,9 +86,8 @@ const LoginForm = () => {
               },
             ]}
           >
-            <Input
+            <Input.Password
               prefix={<LockOutlined className="site-form-item-icon" />}
-              type="password"
               placeholder="Password"
             />
           </Form.Item>
