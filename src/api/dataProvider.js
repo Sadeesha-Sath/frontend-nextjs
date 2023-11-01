@@ -81,6 +81,14 @@ const checkUsername = async (data) => {
   return response;
 };
 
+const checkNIC = async (data) => {
+  const response = await fetchJson("auth/checkNic", {
+    method: "POST",
+    body: data,
+  });
+  return response;
+};
+
 const addEmployee = async (data) => {
   const response = await fetchJson("employees/new", {
     method: "POST",
@@ -187,6 +195,14 @@ const getActiveLoans = async () => {
   return response;
 };
 
+const getLoanInterests = async () => {
+  const response = await fetchJson("loans/interests", {
+    method: "GET",
+  });
+  console.log(response.data);
+  return response.data;
+};
+
 const getBranches = async () => {
   const response = await fetchJson("branches", {
     method: "GET",
@@ -284,4 +300,5 @@ export {
   rejectLoanApplication,
   getAccountBasic,
   getFDInterest,
+  checkNIC,
 };
