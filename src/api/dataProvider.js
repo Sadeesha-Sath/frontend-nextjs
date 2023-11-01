@@ -300,5 +300,4 @@ export {
   rejectLoanApplication,
   getAccountBasic,
   getFDInterest,
-  checkNIC,
 };
