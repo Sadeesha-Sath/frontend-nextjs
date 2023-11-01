@@ -31,6 +31,7 @@ import {
   getBranchDetailsMinimal,
 } from "@/api/dataProvider";
 import { useRouter } from "next/navigation";
+import toast from "@/components/Toast";
 
 const { Title, Link } = Typography;
 
@@ -64,22 +65,34 @@ const CreateCustomer = () => {
   const onDatePickerChange = (date, dateString) => {
     setDate(dateString);
   };
+  const notify = React.useCallback((type, message, description) => {
+    toast({ type, message, description });
+  }, []);
+
+  const dismiss = React.useCallback(() => {
+    toast.dismiss();
+  }, []);
   const handleOnFinish = async (values) => {
     console.log("Received values of form: ", values);
     if (values.password === values["confirm-pass"]) {
       setLoading(true);
-      values.dob = date.split("T")[0];
+      if (customerType === "Individual") {
+        values.dob = date.split("T")[0];
+      }
       let res;
       try {
         res = await addCustomer(values);
         setLoading(false);
         if (res.status === 200) {
+          notify("success", "Customer Created!");
           router.back();
         } else {
+          notify("error", "Customer Creation Failed!", res.data.message);
           console.log(res);
         }
       } catch (error) {
         setLoading(false);
+        notify("error", "Customer Creation Failed!");
         console.log(error);
       }
     } else {

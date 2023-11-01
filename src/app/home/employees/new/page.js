@@ -39,7 +39,6 @@ const { Title, Link } = Typography;
 const CreateEmployee = () => {
   const router = useRouter();
   const [form] = Form.useForm();
-  const customerType = Form.useWatch("customerType", form);
   const username = Form.useWatch("username", form);
   const [validUser, setValidUser] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -71,8 +70,8 @@ const CreateEmployee = () => {
       console.log(res.data);
     }
   };
-  const notify = React.useCallback((type, message) => {
-    toast({ type, message });
+  const notify = React.useCallback((type, message, description) => {
+    toast({ type, message, description });
   }, []);
 
   const dismiss = React.useCallback(() => {
@@ -94,7 +93,7 @@ const CreateEmployee = () => {
           notify("success", "Employee Created!");
           router.back();
         } else {
-          notify("error", "Employee Creation Failed!");
+          notify("error", "Employee Creation Failed!", res.data.message);
           console.log(res);
         }
       } catch (error) {

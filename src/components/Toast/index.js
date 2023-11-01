@@ -23,11 +23,14 @@ export const displayIcon = (type) => {
   }
 };
 
-const ToastMessage = ({ type, message }) =>
+const ToastMessage = ({ type, message, description = "" }) =>
   toast[type](
     <div style={{ display: "flex" }}>
-      <div style={{ flexGrow: 1, fontSize: 15, padding: "8px 12px" }}>
+      <div style={{ flexGrow: 2, fontSize: 15, padding: "8px 3px 8px 12px" }}>
         {message}
+      </div>
+      <div style={{ flexGrow: 1, fontSize: 13, padding: "8px 12px 8px 3px" }}>
+        {description}
       </div>
     </div>
   );
