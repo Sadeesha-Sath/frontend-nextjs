@@ -1,5 +1,6 @@
 "use client";
 
+import usePermissions from "@/app/auth/permissions/permissions";
 import ToastMessage from "@/components/Toast";
 import React from "react";
 const {
@@ -154,6 +155,9 @@ const PendingLoanApplications = () => {
       dataIndex: "CheckedBy",
       key: "CheckedBy",
     },
+  ];
+  const canVerify = usePermissions("VERITY_LOAN_APPLICATIONS");
+  const actions = [
     {
       title: "Action",
       key: "action",
@@ -220,7 +224,7 @@ const PendingLoanApplications = () => {
             <Spin />
           ) : (
             <Table
-              columns={columns}
+              columns={canVerify ? [...columns, ...actions] : columns}
               dataSource={data}
               rowKey={(record) => record.LoanApplicationID}
               scroll={{ x: "max-content" }}
