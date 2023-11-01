@@ -108,7 +108,7 @@ const HomeLayout = ({ children }) => {
                 marginInline: "6px",
                 position: "relative",
                 backgroundColor: "#EAEAEA",
-                padding: "1rem",
+                padding: "20px",
                 minHeight: "75vh",
                 borderRadius: 20,
               }}
