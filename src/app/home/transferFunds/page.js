@@ -69,7 +69,7 @@ const FundTransfer = () => {
 
   return (
     <div className="form-container">
-      <center>
+      <div style={{ display: "flex", alignItems: "center" }}>
         <Form
           form={form}
           name="fundtransfer-form"
@@ -249,7 +249,7 @@ const FundTransfer = () => {
             </Button>
           </Form.Item>
         </Form>
-      </center>
+      </div>
     </div>
   );
 };
