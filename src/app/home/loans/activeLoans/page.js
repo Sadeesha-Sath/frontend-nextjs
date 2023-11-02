@@ -70,7 +70,7 @@ const ActiveLoans = () => {
   return (
     <>
       <Title level={2} key={"Title"}>
-        All Loans
+        Active Loans
       </Title>
       {data === null ? (
         <Spin />

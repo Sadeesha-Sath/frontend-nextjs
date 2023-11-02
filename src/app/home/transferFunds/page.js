@@ -83,9 +83,10 @@ const FundTransfer = () => {
           style={{
             backgroundColor: "#F5F7F8",
             maxWidth: "500px",
+            boxShadow: " 0px 0px 10px 0px rgba(0, 0, 0, 0.1)",
+            border: "1px solid #E0E0E0",
             padding: "50px",
-            borderRadius: "10px",
-            border: "0.2px solid grey",
+            borderRadius: 30,
           }}
         >
           <center>

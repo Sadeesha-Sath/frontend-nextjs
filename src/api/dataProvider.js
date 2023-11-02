@@ -309,6 +309,14 @@ const getFDofUser = async (userID) => {
   return response;
 };
 
+const getViews = async (branchID, reportType) => {
+  const queryParams = stringify({ branchID, reportType });
+  const response = await fetchJson(`reports/view/?${queryParams}`, {
+    method: "GET",
+  });
+  return response;
+};
+
 export {
   loginByEmail,
   loginByUsername,
@@ -344,4 +352,5 @@ export {
   addOfflineLoanApplication,
   getLoanInterest,
   getFDofUser,
+  getViews,
 };
