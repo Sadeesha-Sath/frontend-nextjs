@@ -127,6 +127,13 @@ const getAccountBasic = async (data) => {
   return response;
 };
 
+const getSavingAccountBasic = async (data) => {
+  const response = await fetchJson("accounts/saving/basic", {
+    method: "GET",
+  });
+  return response;
+};
+
 const getMyAccounts = async (data) => {
   console.log(data);
   const queryParams = stringify(data);
@@ -193,14 +200,6 @@ const getActiveLoans = async () => {
     method: "GET",
   });
   return response;
-};
-
-const getLoanInterests = async () => {
-  const response = await fetchJson("loans/interests", {
-    method: "GET",
-  });
-  console.log(response.data);
-  return response.data;
 };
 
 const getBranches = async () => {
@@ -272,6 +271,30 @@ const getFDInterest = async (id) => {
   return response;
 };
 
+const addFixedDeposit = async (data) => {
+  const response = await fetchJson("fixed-deposits/new", {
+    method: "POST",
+    body: data,
+  });
+  return response;
+};
+
+const addOnlineLoanApplication = async (data) => {
+  const response = await fetchJson("loanApplications/new", {
+    method: "POST",
+    data: { ...data, isOnline: true },
+  });
+  return response;
+};
+
+const addOfflineLoanApplication = async (data) => {
+  const response = await fetchJson("loanApplications/new", {
+    method: "POST",
+    data: { ...data, isOnline: false },
+  });
+  return response;
+};
+
 export {
   loginByEmail,
   loginByUsername,
@@ -299,6 +322,10 @@ export {
   approveLoanApplication,
   rejectLoanApplication,
   getAccountBasic,
+  getSavingAccountBasic,
   getFDInterest,
   checkNIC,
+  addFixedDeposit,
+  addOnlineLoanApplication,
+  addOfflineLoanApplication,
 };

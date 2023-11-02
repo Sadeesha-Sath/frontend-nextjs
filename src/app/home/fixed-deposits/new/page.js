@@ -1,13 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Button, Form, Input, Select, Spin, Typography } from "antd";
-const { Option } = Select;
-const { Title, Link } = Typography;
-const onFinish = (values) => {
-  console.log("Received values of form: ", values);
-};
+const { Title } = Typography;
 import "./styles.css";
-import { getAccountBasic, getFDInterest } from "@/api/dataProvider";
+import {
+  addFixedDeposit,
+  getSavingAccountBasic,
+  getFDInterest,
+} from "@/api/dataProvider";
+import toast from "@/components/Toast";
+import { useRouter } from "next/navigation";
 
 const rates_fetch = async () => {
   try {
@@ -26,7 +28,7 @@ const rates_fetch = async () => {
 
 const account_fetch = async () => {
   try {
-    const response = await getAccountBasic();
+    const response = await getSavingAccountBasic();
     if (response.status === 200) {
       const accounts = response.data.map((item) => ({
         value: item.AccountNo,
@@ -47,6 +49,32 @@ const AddFixedDeposit = () => {
   const [interestRate, setInterestRate] = useState(null);
   const [showRate, setShowRate] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const notify = React.useCallback((type, message, description) => {
+    toast({ type, message, description });
+  }, []);
+
+  const dismiss = React.useCallback(() => {
+    toast.dismiss();
+  }, []);
+  const router = useRouter();
+
+  const onFinish = async (values) => {
+    console.log("Received values of form: ", values);
+    try {
+      const res = await addFixedDeposit(values);
+      if (res.status === 200) {
+        notify("success", "Fixed Deposit Created!");
+        router.back();
+      } else {
+        notify("error", "Fixed Deposit Creation Failed!");
+        console.log(res);
+      }
+    } catch (err) {
+      console.error(err);
+      notify("error", "Fixed Deposit Creation Failed!");
+    }
+  };
 
   useEffect(() => {
     setLoading(true);

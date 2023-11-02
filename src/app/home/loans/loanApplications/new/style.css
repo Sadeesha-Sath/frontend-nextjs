@@ -3,6 +3,13 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
+    background-color: #F5F7F8;
+    max-width: 500px;
+    padding: 50px 25px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    border: 1px solid #E0E0E0;
+
 }
 
 .input-container {

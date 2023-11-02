@@ -4,7 +4,7 @@ import _ from "lodash";
 import React, { useEffect, useState } from "react";
 import { AutoComplete, Button, Form, Input, Select, Typography } from "antd";
 const { Title } = Typography;
-import toast from "@components/Toast";
+import toast from "@/components/Toast";
 import "./style.css";
 
 //account fetch must be fixed   get my accounts
@@ -26,9 +26,10 @@ const account_fetch = async (data) => {
 const FundTransfer = () => {
   const [accountList, setAccountList] = useState([]);
   const [trnType, setTrnType] = useState("atm");
+  const [form] = Form.useForm();
   const trnTypes = [
-    { value: "atm", label: "ATM" },
-    { value: "online", label: "Online" },
+    { value: "ATM", label: "ATM" },
+    { value: "Online", label: "Online" },
   ];
   const notify = React.useCallback((type, message) => {
     toast({ type, message });
@@ -44,6 +45,7 @@ const FundTransfer = () => {
       const result = await addTransaction(values);
       if (result.status === 200) {
         console.log("Success");
+        form.resetFields();
         notify("success", "Transaction Complete!");
       } else {
         console.log("Unsuccessful");
@@ -69,6 +71,7 @@ const FundTransfer = () => {
     <div className="form-container">
       <center>
         <Form
+          form={form}
           name="fundtransfer-form"
           onFinish={onFinish}
           labelCol={{
@@ -92,7 +95,7 @@ const FundTransfer = () => {
           </center>
           <Form.Item label="Payer Account Number">
             <Form.Item
-              name="FromAccount"
+              name="fromAccountNo"
               style={{ display: "flex", width: "800px", marginBottom: 0 }}
               rules={[
                 {
@@ -133,7 +136,7 @@ const FundTransfer = () => {
 
           <Form.Item label="Transaction Type">
             <Form.Item
-              name="trnType"
+              name="type"
               noStyle
               rules={[
                 {
@@ -169,7 +172,7 @@ const FundTransfer = () => {
               }}
             >
               <Form.Item
-                name="ToAccount"
+                name="toAccountNo"
                 rules={[
                   {
                     required: true,
