@@ -67,9 +67,11 @@ const PendingLoanApplications = () => {
     if (response.status === 200) {
       notify("success", `Loan Application ${id} Approved`);
       console.log("success");
+      fetchData();
     } else {
       notify("error", "Loan Approval Failed!");
       console.log("Not Successful");
+      console.log(response.data);
     }
   };
   const reject = async (id) => {
@@ -77,9 +79,11 @@ const PendingLoanApplications = () => {
     if (response.status === 200) {
       notify("success", `Loan Application ${id} Rejected`);
       console.log("success");
+      fetchData();
     } else {
       notify("error", "Loan Rejection Failed!");
       console.log("Not Successful");
+      console.log(response.data);
     }
   };
   useEffect(() => {

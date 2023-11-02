@@ -81,10 +81,10 @@ const checkUsername = async (data) => {
   return response;
 };
 
-const checkNIC = async (data) => {
+const checkNIC = async (nic) => {
   const response = await fetchJson("auth/checkNic", {
     method: "POST",
-    body: data,
+    body: { nic },
   });
   return response;
 };
@@ -271,6 +271,13 @@ const getFDInterest = async (id) => {
   return response;
 };
 
+const getLoanInterest = async (id) => {
+  const response = await fetchJson("interest/loan", {
+    method: "GET",
+  });
+  return response;
+};
+
 const addFixedDeposit = async (data) => {
   const response = await fetchJson("fixed-deposits/new", {
     method: "POST",
@@ -282,7 +289,7 @@ const addFixedDeposit = async (data) => {
 const addOnlineLoanApplication = async (data) => {
   const response = await fetchJson("loanApplications/new", {
     method: "POST",
-    data: { ...data, isOnline: true },
+    body: { ...data, isOnline: true },
   });
   return response;
 };
@@ -290,7 +297,14 @@ const addOnlineLoanApplication = async (data) => {
 const addOfflineLoanApplication = async (data) => {
   const response = await fetchJson("loanApplications/new", {
     method: "POST",
-    data: { ...data, isOnline: false },
+    body: { ...data, isOnline: false },
+  });
+  return response;
+};
+
+const getFDofUser = async (userID) => {
+  const response = await fetchJson(`fixed-deposits/ofUser/${userID}`, {
+    method: "GET",
   });
   return response;
 };
@@ -328,4 +342,6 @@ export {
   addFixedDeposit,
   addOnlineLoanApplication,
   addOfflineLoanApplication,
+  getLoanInterest,
+  getFDofUser,
 };
