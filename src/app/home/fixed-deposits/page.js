@@ -1,19 +1,19 @@
 "use client";
 
 import { useUserStore } from "@/store/store";
+import { useRouter } from "next/navigation";
 
 const { getFD, getMyFD } = require("@/api/dataProvider");
-const { Table, Spin, Typography } = require("antd");
+const { Table, Spin, Typography, Flex, Col, Button } = require("antd");
 const { useState, useEffect } = require("react");
 
 const { Title } = Typography;
 
 const AllFixedDeposits = () => {
-    const user = useUserStore((state) => state.user);
+  const user = useUserStore((state) => state.user);
   const [data, setData] = useState(null);
-    const fetchData = async () => {
-      
-    const res = await(user.Role === "customer" ? getMyFD(): getFD());
+  const fetchData = async () => {
+    const res = await (user.Role === "customer" ? getMyFD() : getFD());
     if (res.status === 200) {
       setData(res.data);
     } else {
@@ -61,20 +61,34 @@ const AllFixedDeposits = () => {
       key: "LastDeptDate",
     },
   ];
+  const router = useRouter();
   return (
     <>
-      <Title level={2} key={"Title"}>
-        Fixed Deposits
-      </Title>
-      {data === null ? (
-        <Spin />
-      ) : (
-        <Table
-          columns={columns}
-          dataSource={data}
-          scroll={{ x: "max-content" }}
-        />
-      )}
+      <Flex gap="middle" vertical>
+        <Title level={2} key={"Title"}>
+          Fixed Deposits
+        </Title>
+        <Col span={6}>
+          <Button
+            type="primary"
+            onClick={(e) => {
+              router.push("/home/fixed-deposits/new");
+            }}
+          >
+            Open New Fixed Deposit
+          </Button>
+        </Col>
+        {data === null ? (
+          <Spin />
+        ) : (
+          <Table
+            columns={columns}
+            dataSource={data}
+            rowKey={(record) => record.FixedId}
+            scroll={{ x: "max-content" }}
+          />
+        )}
+      </Flex>
     </>
   );
 };

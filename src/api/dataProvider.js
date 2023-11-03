@@ -81,6 +81,14 @@ const checkUsername = async (data) => {
   return response;
 };
 
+const checkNIC = async (nic) => {
+  const response = await fetchJson("auth/checkNic", {
+    method: "POST",
+    body: { nic },
+  });
+  return response;
+};
+
 const addEmployee = async (data) => {
   const response = await fetchJson("employees/new", {
     method: "POST",
@@ -109,6 +117,20 @@ const getAllAccounts = async (data) => {
     accountType: item.SavingsPlanType === null ? "Current" : "Savings",
     key: item.AccountNumber,
   }));
+  return response;
+};
+
+const getAccountBasic = async (data) => {
+  const response = await fetchJson("accounts/basic", {
+    method: "GET",
+  });
+  return response;
+};
+
+const getSavingAccountBasic = async (data) => {
+  const response = await fetchJson("accounts/saving/basic", {
+    method: "GET",
+  });
   return response;
 };
 
@@ -218,6 +240,83 @@ const getAllLoanInstallments = async (branchID) => {
   return response;
 };
 
+const addTransaction = async (data) => {
+  const response = await fetchJson("transactions/add", {
+    method: "POST",
+    body: data,
+  });
+  return response;
+};
+
+const approveLoanApplication = async (id) => {
+  const response = await fetchJson("loanApplications/approve", {
+    method: "POST",
+    body: { id },
+  });
+  return response;
+};
+
+const rejectLoanApplication = async (id) => {
+  const response = await fetchJson("loanApplications/reject", {
+    method: "POST",
+    body: { id },
+  });
+  return response;
+};
+
+const getFDInterest = async (id) => {
+  const response = await fetchJson("interest/fd", {
+    method: "GET",
+  });
+  return response;
+};
+
+const getLoanInterest = async (id) => {
+  const response = await fetchJson("interest/loan", {
+    method: "GET",
+  });
+  return response;
+};
+
+const addFixedDeposit = async (data) => {
+  const response = await fetchJson("fixed-deposits/new", {
+    method: "POST",
+    body: data,
+  });
+  return response;
+};
+
+const addOnlineLoanApplication = async (data) => {
+  const response = await fetchJson("loanApplications/new", {
+    method: "POST",
+    body: { ...data, isOnline: true },
+  });
+  return response;
+};
+
+const addOfflineLoanApplication = async (data) => {
+  const response = await fetchJson("loanApplications/new", {
+    method: "POST",
+    body: { ...data, isOnline: false },
+  });
+  return response;
+};
+
+const getFDofUser = async (userID) => {
+  const response = await fetchJson(`fixed-deposits/ofUser/${userID}`, {
+    method: "GET",
+  });
+  return response;
+};
+
+const getViews = async (branchID, reportType) => {
+  const queryParams = stringify({ branchID, reportType });
+  const response = await fetchJson(`reports/view/?${queryParams}`, {
+    method: "GET",
+  });
+  return response;
+};
+
 export {
   loginByEmail,
   loginByUsername,
@@ -241,4 +340,17 @@ export {
   getAllLoanApplications,
   getAllLoanInstallments,
   getPendingLoanApplications,
+  addTransaction,
+  approveLoanApplication,
+  rejectLoanApplication,
+  getAccountBasic,
+  getSavingAccountBasic,
+  getFDInterest,
+  checkNIC,
+  addFixedDeposit,
+  addOnlineLoanApplication,
+  addOfflineLoanApplication,
+  getLoanInterest,
+  getFDofUser,
+  getViews,
 };

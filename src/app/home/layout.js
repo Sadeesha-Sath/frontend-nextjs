@@ -1,10 +1,17 @@
 "use client";
-import { menuItemsAdmin, menuItemsBManager, menuItemsEmployee,menuItemsCustomer } from "@/constants/menuItems";
+import {
+  menuItemsAdmin,
+  menuItemsBManager,
+  menuItemsEmployee,
+  menuItemsCustomer,
+} from "@/constants/menuItems";
 import { useUserStore } from "@/store/store";
-import { Menu, Layout, Typography, Button, Spin } from "antd";
+import { Menu, Layout, Typography, Button, Spin, Image } from "antd";
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect } from "react";
 import checkToken from "../auth/checkToken";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const { Title } = Typography;
 
@@ -47,9 +54,12 @@ const HomeLayout = ({ children }) => {
               // padding: "0 1.5rem",
             }}
           >
-            <Title level={2} style={{ color: "#1E334F", marginBottom: 0 }}>
-              A Bank
-            </Title>
+            <Image
+              src="https://img.freepik.com/free-photo/beautiful-bouquet-baby-s-breath-flowers-with-white-heart-shape-pink-background_23-2147940349.jpg?w=1060&t=st=1698986531~exp=1698987131~hmac=99037f6492543351e5b4dacd0a8449c487b373e392dc9026380d3a56ea83b690"
+              alt="Logo"
+              height={100}
+              width={100}
+            />
             <Button
               type="primary"
               onClick={() => {
@@ -114,6 +124,16 @@ const HomeLayout = ({ children }) => {
               }}
             >
               {children}
+              <ToastContainer
+                position="top-right"
+                autoClose={4000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                draggable={false}
+                pauseOnVisibilityChange
+                closeOnClick
+                pauseOnHover
+              />
             </Content>
           </Layout>
         </Layout>

@@ -1,17 +1,10 @@
 "use client";
-import {
-  getAllAccounts,
-  getBranchDetailsMinimal,
-  getMyAccounts,
-} from "@/api/dataProvider";
-import { useUserStore } from "@/store/store";
+import { addTransaction, getAllAccounts } from "@/api/dataProvider";
 import _ from "lodash";
 import React, { useEffect, useState } from "react";
 import { AutoComplete, Button, Form, Input, Select, Typography } from "antd";
-const { Title, Link } = Typography;
-const onFinish = (values) => {
-  console.log("Received values of form: ", values);
-};
+const { Title } = Typography;
+import toast from "@/components/Toast";
 import "./style.css";
 
 //account fetch must be fixed   get my accounts
@@ -33,10 +26,35 @@ const account_fetch = async (data) => {
 const FundTransfer = () => {
   const [accountList, setAccountList] = useState([]);
   const [trnType, setTrnType] = useState("atm");
+  const [form] = Form.useForm();
   const trnTypes = [
-    { value: "atm", label: "ATM" },
-    { value: "online", label: "Online" },
+    { value: "ATM", label: "ATM" },
+    { value: "Online", label: "Online" },
   ];
+  const notify = React.useCallback((type, message) => {
+    toast({ type, message });
+  }, []);
+
+  const dismiss = React.useCallback(() => {
+    toast.dismiss();
+  }, []);
+
+  const onFinish = async (values) => {
+    console.log("Received values of form: ", values);
+    try {
+      const result = await addTransaction(values);
+      if (result.status === 200) {
+        console.log("Success");
+        form.resetFields();
+        notify("success", "Transaction Complete!");
+      } else {
+        console.log("Unsuccessful");
+        notify("error", "Transaction Failed!");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   useEffect(() => {
     account_fetch()
@@ -51,8 +69,9 @@ const FundTransfer = () => {
 
   return (
     <div className="form-container">
-      <center>
+      <div style={{ display: "flex", alignItems: "center" }}>
         <Form
+          form={form}
           name="fundtransfer-form"
           onFinish={onFinish}
           labelCol={{
@@ -64,9 +83,10 @@ const FundTransfer = () => {
           style={{
             backgroundColor: "#F5F7F8",
             maxWidth: "500px",
+            boxShadow: " 0px 0px 10px 0px rgba(0, 0, 0, 0.1)",
+            border: "1px solid #E0E0E0",
             padding: "50px",
-            borderRadius: "10px",
-            border: "0.2px solid grey",
+            borderRadius: 30,
           }}
         >
           <center>
@@ -76,7 +96,7 @@ const FundTransfer = () => {
           </center>
           <Form.Item label="Payer Account Number">
             <Form.Item
-              name="FromAccount"
+              name="fromAccountNo"
               style={{ display: "flex", width: "800px", marginBottom: 0 }}
               rules={[
                 {
@@ -117,7 +137,7 @@ const FundTransfer = () => {
 
           <Form.Item label="Transaction Type">
             <Form.Item
-              name="trnType"
+              name="type"
               noStyle
               rules={[
                 {
@@ -153,7 +173,7 @@ const FundTransfer = () => {
               }}
             >
               <Form.Item
-                name="ToAccount"
+                name="toAccountNo"
                 rules={[
                   {
                     required: true,
@@ -229,7 +249,7 @@ const FundTransfer = () => {
             </Button>
           </Form.Item>
         </Form>
-      </center>
+      </div>
     </div>
   );
 };

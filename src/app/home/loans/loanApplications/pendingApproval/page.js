@@ -1,13 +1,27 @@
 "use client";
 
+import usePermissions from "@/app/auth/permissions/permissions";
+import ToastMessage from "@/components/Toast";
+import React from "react";
 const {
   getPendingLoanApplications,
   getBranchDetailsMinimal,
+  approveLoanApplication,
+  rejectLoanApplication,
 } = require("@/api/dataProvider");
-const { Table, Spin, Typography, Form, Select, Button, Flex } = require("antd");
+const {
+  Table,
+  Spin,
+  Typography,
+  Form,
+  Select,
+  Button,
+  Flex,
+  Space,
+} = require("antd");
 const { useState, useEffect } = require("react");
 
-const { Title } = Typography;
+const { Title, Link } = Typography;
 
 const PendingLoanApplications = () => {
   const [data, setData] = useState(null);
@@ -39,6 +53,37 @@ const PendingLoanApplications = () => {
       setBranchesData([...res.data, { BranchID: "ALL", BranchName: "ALL" }]);
     } else {
       console.log(res.data);
+    }
+  };
+  const notify = React.useCallback((type, message) => {
+    ToastMessage({ type, message });
+  }, []);
+
+  const dismiss = React.useCallback(() => {
+    ToastMessage.dismiss();
+  }, []);
+  const approve = async (id) => {
+    const response = await approveLoanApplication(id);
+    if (response.status === 200) {
+      notify("success", `Loan Application ${id} Approved`);
+      console.log("success");
+      fetchData();
+    } else {
+      notify("error", "Loan Approval Failed!");
+      console.log("Not Successful");
+      console.log(response.data);
+    }
+  };
+  const reject = async (id) => {
+    const response = await rejectLoanApplication(id);
+    if (response.status === 200) {
+      notify("success", `Loan Application ${id} Rejected`);
+      console.log("success");
+      fetchData();
+    } else {
+      notify("error", "Loan Rejection Failed!");
+      console.log("Not Successful");
+      console.log(response.data);
     }
   };
   useEffect(() => {
@@ -115,6 +160,33 @@ const PendingLoanApplications = () => {
       key: "CheckedBy",
     },
   ];
+  const canVerify = usePermissions("VERITY_LOAN_APPLICATIONS");
+  const actions = [
+    {
+      title: "Action",
+      key: "action",
+      render: (_, record) => (
+        <Space size="middle">
+          <Button
+            type="primary"
+            onClick={() => {
+              approve(record.LoanApplicationID);
+            }}
+          >
+            Approve
+          </Button>
+          <Button
+            danger
+            onClick={() => {
+              reject(record.LoanApplicationID);
+            }}
+          >
+            Reject
+          </Button>
+        </Space>
+      ),
+    },
+  ];
   return (
     <>
       <Flex gap="middle" vertical>
@@ -156,7 +228,7 @@ const PendingLoanApplications = () => {
             <Spin />
           ) : (
             <Table
-              columns={columns}
+              columns={canVerify ? [...columns, ...actions] : columns}
               dataSource={data}
               rowKey={(record) => record.LoanApplicationID}
               scroll={{ x: "max-content" }}

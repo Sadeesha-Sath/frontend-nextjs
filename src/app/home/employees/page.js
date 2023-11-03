@@ -83,7 +83,7 @@ const AllEmployees = () => {
               router.push("/home/employees/new");
             }}
           >
-            Create New Employee
+            Add New Employee
           </Button>
         </Col>
         {data === null ? (
